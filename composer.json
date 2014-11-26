@@ -1,0 +1,11 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Basalt\\": "app/Basalt/"
+        }
+    },
+    "require": {
+        "twig/twig": "~1.0",
+        "symfony/routing": "~2.5"
+    }
+}
