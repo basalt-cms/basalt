@@ -6,8 +6,6 @@ use Basalt\Http\Request;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Route;
-use Symfony\Component\Routing\RouteCollection;
 
 class App
 {
@@ -22,21 +20,12 @@ class App
         };
 
         $this->container->routes = function() {
-            $routes = new RouteCollection();
-
-            // TODO: Move routes to other file.
-            $indexRoute = new Route(
-                '/', [
-                    '_controller' => 'Main:index'
-                ], [], [], '', [], Request::METHOD_GET);
-
-            $routes->add('index', $indexRoute);
-
-            return $routes;
+            return require dirname(dirname(__FILE__)).'/routes.php';
         };
 
         $this->container->context = function() {
             $context = new RequestContext($_SERVER['REQUEST_URI']);
+            $this->container->request->prepareContext($context);
             $context->setMethod($this->container->request->getMethod());
 
             return $context;
@@ -48,6 +37,31 @@ class App
 
         $this->container->generator = function($container) {
           return new UrlGenerator($container->routes, $container->context);
+        };
+    }
+
+    public function run()
+    {
+        $this->prepareResponse();
+
+        $this->container->response->send();
+    }
+
+    protected function prepareResponse()
+    {
+        $this->container->response = function($container) {
+            $route = $container->matcher->match(isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
+            list($controller, $action) = explode('@', $route['_controller']);
+
+            $attributes_keys = array_filter(array_keys($route), function($key) {
+                return strpos($key, '_') !== 0;
+            });
+            $attributes = array_intersect_key($route, array_flip($attributes_keys));
+
+            $controller = new $controller($this);
+            $response = call_user_func_array([$controller, $action], $attributes);
+
+            return $response;
         };
     }
 }

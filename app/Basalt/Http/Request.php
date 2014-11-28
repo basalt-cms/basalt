@@ -2,6 +2,8 @@
 
 namespace Basalt\Http;
 
+use Symfony\Component\Routing\RequestContext;
+
 class Request
 {
     const METHOD_GET = 'GET';
@@ -10,56 +12,13 @@ class Request
     const METHOD_DELETE = 'DELETE';
     const METHOD_OVERRIDE = '_METHOD';
 
-    protected $headers;
     protected $input;
+    protected $method;
 
     public function __construct()
     {
-        $this->headers = new Headers;
-
         $this->extractInput();
-    }
-
-    public function getMethod()
-    {
-        if (isset($_REQUEST[self::METHOD_OVERRIDE])) {
-            $method = strtoupper($_REQUEST[self::METHOD_OVERRIDE]);
-
-            if($method === self::METHOD_GET || $method === self::METHOD_POST || $method === self::METHOD_PUT || $method === self::METHOD_DELETE) {
-                return $method;
-            }
-        }
-
-        return $_SERVER['REQUEST_METHOD'];
-    }
-
-    public function isGet()
-    {
-        return $this->getMethod() === self::METHOD_GET;
-    }
-
-    public function isPost()
-    {
-        return $this->getMethod() === self::METHOD_POST;
-    }
-
-    public function isPut()
-    {
-        return $this->getMethod() === self::METHOD_PUT;
-    }
-
-    public function isDelete()
-    {
-        return $this->getMethod() === self::METHOD_DELETE;
-    }
-
-    public function isAjax()
-    {
-        if (isset($this->headers['X_REQUESTED_WITH']) && $this->headers['X_REQUESTED_WITH'] === 'XMLHttpRequest') {
-            return true;
-        }
-
-        return false;
+        $this->setMethod();
     }
 
     public function get($name, $default = null)
@@ -72,8 +31,37 @@ class Request
         return isset($this->input[$name]);
     }
 
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    public function prepareContext(RequestContext &$context)
+    {
+        $context->setMethod($this->method);
+    }
+
+    public function isAjax()
+    {
+        return (isset($_SERVER['X_REQUESTED_WITH']) && $_SERVER['X_REQUESTED_WITH'] === 'XMLHttpRequest');
+    }
+
     protected function extractInput()
     {
         $this->input = array_merge($_GET, $_POST);
+    }
+
+    protected function setMethod()
+    {
+        if (isset($_REQUEST[self::METHOD_OVERRIDE])) {
+            $method = strtoupper($_REQUEST[self::METHOD_OVERRIDE]);
+
+            if ($method === self::METHOD_GET || $method === self::METHOD_POST || $method === self::METHOD_PUT || $method === self::METHOD_DELETE) {
+                $this->method = $method;
+                return;
+            }
+        }
+
+        $this->method = $_SERVER['REQUEST_METHOD'];
     }
 }
