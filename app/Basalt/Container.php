@@ -4,9 +4,20 @@ namespace Basalt;
 
 class Container
 {
+    /**
+     * @var \Basalt\App Application
+     */
     public $app;
+    /**
+     * @var array Data.
+     */
     protected $data = [];
 
+    /**
+     * Constructor.
+     *
+     * @param \Basalt\App $app
+     */
     public function __construct(App $app)
     {
         $this->app = $app;

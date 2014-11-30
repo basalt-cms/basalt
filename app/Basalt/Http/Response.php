@@ -6,34 +6,70 @@ use Basalt\Exceptions\WrongStatusException;
 
 class Response
 {
+    /**
+     * @var string Response body.
+     */
     protected $body;
-    protected $headers;
+    /**
+     * @var int Status code.
+     */
     protected $status;
+    /**
+     * @var string Document MIME type.
+     */
     protected $mime;
 
-    public function __construct($body, $status = 200, $headers = [], $mime = 'text/html')
+    /**
+     * Constructor.
+     *
+     * @param $body
+     * @param int $status
+     * @param array $headers
+     * @param string $mime
+     */
+    public function __construct($body, $status = 200, $mime = 'text/html')
     {
         $this->body = $body;
         $this->status = $status;
-        $this->headers = $headers;
         $this->mime = $mime;
     }
 
+    /**
+     * Return response body.
+     *
+     * @return string
+     */
     public function getBody()
     {
         return $this->body;
     }
 
+    /**
+     * Set response body.
+     *
+     * @param $body
+     */
     public function setBody($body)
     {
         $this->body = $body;
     }
 
+    /**
+     * Get status code.
+     *
+     * @return int
+     */
     public function getStatus()
     {
         return $this->status;
     }
 
+    /**
+     * Set status code.
+     *
+     * @param $status
+     * @throws \Basalt\Exceptions\WrongStatusException
+     */
     public function setStatus($status)
     {
         if (!is_int($status)) {
@@ -43,16 +79,29 @@ class Response
         $this->status = $status;
     }
 
+    /**
+     * Get document MIME type.
+     *
+     * @return string
+     */
     public function getMime()
     {
         return $this->mime;
     }
 
+    /**
+     * Set document MIME type.
+     *
+     * @param $mime
+     */
     public function setMime($mime)
     {
         $this->mime = $mime;
     }
 
+    /**
+     * Send response to client.
+     */
     public function send()
     {
         header('HTTP/1.1 '.$this->status);
