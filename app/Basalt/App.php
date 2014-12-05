@@ -4,6 +4,7 @@ namespace Basalt;
 
 use Basalt\Exceptions\ConfigNotFoundException;
 use Basalt\Http\Request;
+use Basalt\Providers\ServiceProvider;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
@@ -32,10 +33,6 @@ class App
 
         $this->container->request = function() {
             return new Request;
-        };
-
-        $this->container->routes = function() {
-            return require dirname(dirname(__FILE__)).'/routes.php'; // TODO: Move routes loading to service provider.
         };
 
         $this->container->context = function() {
@@ -92,6 +89,11 @@ class App
 
         foreach ($providers as $provider) {
             $provider = new $provider($this);
+
+            if (!($provider instanceof ServiceProvider)) {
+                continue;
+            }
+
             $provider->provide();
         }
 
