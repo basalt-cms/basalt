@@ -6,8 +6,8 @@ class MainController extends Controller
 {
     public function index()
     {
-        $name = 'WORKS!';
+        $content = 'content';
 
-        return $this->render('index', compact('name'));
+        return $this->render('index', compact('content'));
     }
 } 
