@@ -12,6 +12,6 @@ matrix:
 
 before_script:
   - composer self-update
-  - composer --prefer-source --dev --no-interaction
+  - composer install --prefer-source --dev --no-interaction
 
 script: phpunit
