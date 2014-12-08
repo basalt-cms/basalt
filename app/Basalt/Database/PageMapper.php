@@ -13,6 +13,30 @@ class PageMapper
         $this->pdo = $pdo;
     }
 
+    public function get($id)
+    {
+        if (!is_int($id)) {
+            throw new \InvalidArgumentException;
+        }
+
+        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = :id');
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchObject('\Basalt\Database\Page') ?: null;
+    }
+
+    public function all($drafts = false)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `draft` = :drafts');
+        $statement->bindValue(':drafts', $drafts, PDO::PARAM_BOOL);
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_CLASS, '\Basalt\Database\Page') ?: null;
+    }
+
     public function save(Page &$page)
     {
         $page->validate();

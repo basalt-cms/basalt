@@ -2,6 +2,7 @@
 
 namespace Basalt;
 
+use PDO;
 use Basalt\Exceptions\ConfigNotFoundException;
 use Basalt\Http\Request;
 use Basalt\Providers\ServiceProvider;
@@ -48,7 +49,20 @@ class App
         };
 
         $this->container->generator = function($container) {
-          return new UrlGenerator($container->routes, $container->context);
+            return new UrlGenerator($container->routes, $container->context);
+        };
+
+        $this->container->pdo = function($container) {
+            $config = $container->app->config['database'];
+
+            $dsn = sprintf('mysql:host=%s;dbname=%s', $config['host'], $config['dbname']);
+
+            $pdo = new PDO($dsn, $config['user'], $config['password'], [
+                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
+            ]);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            return $pdo;
         };
     }
 

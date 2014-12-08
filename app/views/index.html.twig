@@ -5,6 +5,9 @@
     </head>
     <body>
         <h1>Test</h1>
-        <pre>{{ content }}</pre>
+        {% for page in pages %}
+            <h2>{{ page.name }}</h2>
+            <pre>{{ page.content }}</pre>
+        {% endfor %}
     </body>
 </html>

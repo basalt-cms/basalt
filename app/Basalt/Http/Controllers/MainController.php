@@ -2,12 +2,15 @@
 
 namespace Basalt\Http\Controllers;
 
+use Basalt\Database\PageMapper;
+
 class MainController extends Controller
 {
     public function index()
     {
-        $content = 'content';
+        $pageMapper = new PageMapper($this->app->container->pdo);
+        $pages = $pageMapper->all();
 
-        return $this->render('index', compact('content'));
+        return $this->render('index', compact('pages'));
     }
 } 

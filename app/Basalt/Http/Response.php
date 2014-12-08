@@ -2,8 +2,6 @@
 
 namespace Basalt\Http;
 
-use Basalt\Exceptions\WrongStatusException;
-
 class Response
 {
     /**
@@ -24,7 +22,6 @@ class Response
      *
      * @param $body
      * @param int $status
-     * @param array $headers
      * @param string $mime
      */
     public function __construct($body, $status = 200, $mime = 'text/html')
@@ -68,12 +65,12 @@ class Response
      * Set status code.
      *
      * @param $status
-     * @throws \Basalt\Exceptions\WrongStatusException
+     * @throws \InvalidArgumentException
      */
     public function setStatus($status)
     {
         if (!is_int($status)) {
-            throw new WrongStatusException;
+            throw new \InvalidArgumentException;
         }
 
         $this->status = $status;

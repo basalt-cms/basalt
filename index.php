@@ -2,6 +2,10 @@
 
 require 'vendor/autoload.php';
 
-$app = new \Basalt\App;
+try {
+    $app = new \Basalt\App;
 
-$app->run();
+    $app->run();
+} catch (Exception $e) {
+    echo '<pre>'.print_r($e, true).'</pre>';
+}
