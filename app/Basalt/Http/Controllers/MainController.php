@@ -3,6 +3,7 @@
 namespace Basalt\Http\Controllers;
 
 use Basalt\Database\PageMapper;
+use Basalt\Database\SettingMapper;
 
 class MainController extends Controller
 {
@@ -11,6 +12,9 @@ class MainController extends Controller
         $pageMapper = new PageMapper($this->app->container->pdo);
         $pages = $pageMapper->all();
 
-        return $this->render('index', compact('pages'));
+        $settingMapper = new SettingMapper($this->app->container->pdo);
+        $siteName = $settingMapper->get('site_name')->value;
+
+        return $this->render('index', compact('pages', 'siteName'));
     }
 } 
