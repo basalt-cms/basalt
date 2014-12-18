@@ -13,14 +13,19 @@ class PageMapper
         $this->pdo = $pdo;
     }
 
-    public function get($id)
+    public function get($slug)
     {
-        if (!is_int($id)) {
-            throw new \InvalidArgumentException;
-        }
+        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `slug` = :slug');
+        $statement->bindValue(':slug', $slug);
 
-        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = :id');
-        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchObject('\Basalt\Database\Page') ?: null;
+    }
+
+    public function getIndex()
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = 1');
 
         $statement->execute();
 

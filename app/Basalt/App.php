@@ -2,6 +2,8 @@
 
 namespace Basalt;
 
+use Basalt\Exceptions\ResponseExpectedException;
+use Basalt\Http\Response;
 use PDO;
 use Basalt\Exceptions\ConfigNotFoundException;
 use Basalt\Http\Request;
@@ -129,6 +131,10 @@ class App
 
             $controller = new $controller($this);
             $response = call_user_func_array([$controller, $action], $attributes);
+
+            if (!($response instanceof Response)) {
+                throw new ResponseExpectedException;
+            }
 
             return $response;
         };

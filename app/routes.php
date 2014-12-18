@@ -8,9 +8,14 @@ $routes = new RouteCollection();
 
 $indexRoute = new Route(
     '/', [
-        '_controller' => 'Basalt\\Http\\Controllers\\MainController@index'
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@page'
+    ], [], [], '', [], Request::METHOD_GET);
+$pageRoute = new Route(
+    '/{slug}', [
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@page'
     ], [], [], '', [], Request::METHOD_GET);
 
 $routes->add('index', $indexRoute);
+$routes->add('page', $pageRoute);
 
 return $routes;
