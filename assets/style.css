@@ -1,0 +1,18 @@
+.header { height: 50px; background: #555; color: #fff; line-height: 50px; }
+.header h1 { float: left; margin: 0; width: 200px; font-weight: bold; text-align: center; line-height: 50px; }
+.header ul { float: right; list-style: none; margin: 0 15px; }
+.header li { float: left; }
+.header a { display: block; padding: 0 15px; color: #fff; text-decoration: none; }
+.header a:hover { background: #777; }
+.header a img { float: left; display: inline; padding: 5px 5px 5px 0; }
+
+.nav { position: absolute; width: 200px; height: calc(100% - 50px); background: #555; }
+.nav ul { list-style: none; margin: 0; padding: 0; }
+.nav a { display: block; padding: 0 15px; color: #fff; text-decoration: none; line-height: 40px; }
+.nav a:hover { background: #777; }
+.nav a.active { position: relative; background: #446cb3; }
+.nav a.active::after { content: ""; position: absolute; top: 0; bottom: 0; right: -5px; width: 10px; height: 10px; margin: auto 0; background: #fff; transform: rotate(45deg); }
+
+.main { margin-left: 200px; padding: 15px; }
+
+.page-header { margin-top: 0; }

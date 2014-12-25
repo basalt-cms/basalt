@@ -1,0 +1,36 @@
+{% extends 'admin.html.twig' %}
+
+{% block content %}
+    <div class="page-header">
+        <a href="#" class="btn btn-default pull-right">Add new page</a>
+        <h1>Pages</h1>
+    </div>
+    <p class="alert alert-info">The rows which are marked with blue are drafts.</p>
+    <table class="table table-striped">
+        <colgroup>
+            <col class="col-xs-2">
+            <col class="col-xs-4">
+            <col class="col-xs-5">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Page slug</th>
+                <th>Page title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in pages %}
+                <tr{{ page.draft ? ' class="info"' : '' }}>
+                    <td>/{{ page.slug }}</td>
+                    <td>{{ page.name }}</td>
+                    <td><a href="#">Edit</a> <a href="#">Delete</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">There are no pages</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

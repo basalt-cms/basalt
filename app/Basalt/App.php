@@ -34,6 +34,8 @@ class App
 
         $this->container = new Container($this);
 
+        $this->container->mainUrl = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME).'/';
+
         $this->container->request = function() {
             return new Request;
         };

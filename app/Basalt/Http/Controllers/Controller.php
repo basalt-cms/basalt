@@ -25,7 +25,7 @@ class Controller
     public function __construct(App $app)
     {
         $this->app = $app;
-        $this->view = new View;
+        $this->view = new View($app);
     }
 
     /**

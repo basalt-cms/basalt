@@ -4,21 +4,15 @@ namespace Basalt;
 
 class View
 {
-    /**
-     * @var \Twig_Environment Twig.
-     */
-    protected $twig;
+    protected $app;
 
     /**
      * Constructor
+     * @param App $app
      */
-    public function __construct()
+    public function __construct(App $app)
     {
-        $twigLoader = new \Twig_Loader_Filesystem(dirname(dirname(__FILE__)).'/views');
-        $this->twig = new \Twig_Environment($twigLoader, [
-            //'cache' => '../cache/twig',
-            'autoescape' => false
-        ]);
+        $this->app = $app;
     }
 
     /**
@@ -30,6 +24,8 @@ class View
      */
     public function render($name, $data = [])
     {
-        return $this->twig->render($name.'.html.twig', $data);
+        $name = str_replace('.', '/', $name);
+
+        return $this->app->container->twig->render($name.'.html.twig', $data);
     }
 } 

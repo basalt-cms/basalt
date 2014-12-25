@@ -34,8 +34,8 @@ class PageMapper
 
     public function all($drafts = false)
     {
-        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `draft` = :drafts');
-        $statement->bindValue(':drafts', $drafts, PDO::PARAM_BOOL);
+        $drafts = $drafts ? '' : ' WHERE `draft` = 0';
+        $statement = $this->pdo->prepare('SELECT * FROM `pages`'.$drafts);
 
         $statement->execute();
 
