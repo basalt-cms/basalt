@@ -24,7 +24,14 @@
                 <tr{{ page.draft ? ' class="info"' : '' }}>
                     <td>/{{ page.slug }}</td>
                     <td>{{ page.name }}</td>
-                    <td><a href="#">Edit</a> <a href="#">Delete</a></td>
+                    <td>
+                        <a href="#">Edit</a>
+                        {% if page.id != 1 %}
+                            <a href="#">Delete</a>
+                        {% else %}
+                            <del title="You cannot delete main page!">Delete</del>
+                        {% endif %}
+                    </td>
                 </tr>
             {% else %}
                 <tr>

@@ -8,7 +8,7 @@
         <nav>
             <ul>
                 {% for page in menu %}
-                    <li><a href="{{ page.slug }}">{{ page.name|e }}</a></li>
+                    <li><a href="{{ 'page'|url({'slug': page.slug}) }}">{{ page.name|e }}</a></li>
                 {% endfor %}
             </ul>
         </nav>

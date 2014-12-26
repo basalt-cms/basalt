@@ -20,7 +20,7 @@ class TwigServiceProvider extends ServiceProvider
             });
             $urlFilter = new \Twig_SimpleFilter('url', function($name, $parameters = []) {
                 $container = $this->app->container;
-                return $container->mainUrl.'index.php/'.$container->generator->generate($name, $parameters, UrlGenerator::RELATIVE_PATH); // TODO: Remove index.php string
+                return $container->mainUrl.'index.php/'.$container->generator->generate($name, $parameters, UrlGenerator::RELATIVE_PATH); // TODO: Embrace this brothel
             });
 
             $twig->addFilter($assetFilter);
