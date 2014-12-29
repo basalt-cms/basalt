@@ -8,7 +8,9 @@ return [
         'password' => '',
     ],
     'providers' => [
+        'Basalt\\Providers\\AppServiceProvider',
         'Basalt\\Providers\\RouteServiceProvider',
-        'Basalt\\Providers\\TwigServiceProvider'
+        'Basalt\\Providers\\DatabaseServiceProvider',
+        'Basalt\\Providers\\TwigServiceProvider',
     ]
 ];
