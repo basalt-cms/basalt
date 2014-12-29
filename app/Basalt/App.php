@@ -43,7 +43,6 @@ class App
         $this->container->context = function() {
             $context = new RequestContext($_SERVER['REQUEST_URI']);
             $this->container->request->prepareContext($context);
-            $context->setMethod($this->container->request->getMethod());
 
             return $context;
         };
