@@ -13,7 +13,7 @@ class Request
     const METHOD_OVERRIDE = '_METHOD';
 
     /**
-     * @var array Input like GET or POST variables.
+     * @var Input Input like GET or POST variables.
      */
     protected $input;
     /**
@@ -26,31 +26,10 @@ class Request
      */
     public function __construct()
     {
+        $this->input = new Input(array_merge($_GET, $_POST));
+
         $this->extractInput();
         $this->setMethod();
-    }
-
-    /**
-     * Return input variable.
-     *
-     * @param $name
-     * @param null $default
-     * @return null
-     */
-    public function get($name, $default = null)
-    {
-        return (isset($this->input[$name])) ? $this->input[$name] : $default;
-    }
-
-    /**
-     * Is input variable existing?
-     *
-     * @param $name
-     * @return bool
-     */
-    public function exists($name)
-    {
-        return isset($this->input[$name]);
     }
 
     /**

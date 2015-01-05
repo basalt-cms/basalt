@@ -37,9 +37,7 @@ class App
     public function run()
     {
         $this->runProviders();
-
         $this->prepareResponse();
-
         $this->container->response->send();
     }
 
