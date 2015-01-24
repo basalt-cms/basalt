@@ -22,7 +22,7 @@ class PageController extends Controller
         return $this->render('page', compact('menu', 'page'));
     }
 
-    public function adminIndex()
+    public function pages()
     {
         $pageMapper = new PageMapper($this->app->container->pdo);
 

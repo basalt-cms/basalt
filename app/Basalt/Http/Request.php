@@ -75,8 +75,8 @@ class Request
      */
     protected function setMethod()
     {
-        if (isset($_REQUEST[self::METHOD_OVERRIDE])) {
-            $method = strtoupper($_REQUEST[self::METHOD_OVERRIDE]);
+        if (isset($_POST[self::METHOD_OVERRIDE])) {
+            $method = strtoupper($_POST[self::METHOD_OVERRIDE]);
 
             if ($method === self::METHOD_GET || $method === self::METHOD_POST || $method === self::METHOD_PUT || $method === self::METHOD_DELETE) {
                 $this->method = $method;
