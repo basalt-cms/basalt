@@ -73,7 +73,6 @@ class App
 
             $provider->provide();
         }
-
     }
 
     /**

@@ -51,7 +51,8 @@ class PageController extends Controller
 
         try {
             $pageMapper->save($page);
-            $this->redirect('http://google.com');
+
+            return $this->redirect('pages');
         } catch (ValidationException $e) {
             // Errors etc.
         }
@@ -61,5 +62,7 @@ class PageController extends Controller
     {
         $pageMapper = new PageMapper($this->app->container->pdo);
         $pageMapper->delete($id);
+
+        return $this->redirect('pages');
     }
 }

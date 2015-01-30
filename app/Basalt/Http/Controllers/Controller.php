@@ -43,8 +43,27 @@ class Controller
         return new Response($body);
     }
 
-    protected function redirect($to)
+    /**
+     * @param string|array $to
+     * @return RedirectResponse
+     * @param boolean $external
+     */
+    protected function redirect($to, $external = false)
     {
+        if ($external) {
+            if (is_array($to)) {
+                $name = $to[0];
+                $parameters = $to[1];
+            } else {
+                $name = $to;
+                $parameters = [];
+            }
+
+            $url = $this->app->container->generator->generate($name, $parameters);
+
+            return new RedirectResponse($url);
+        }
+
         return new RedirectResponse($to);
     }
 } 
