@@ -31,4 +31,9 @@ $routes->add('addPage', new Route(
         '_controller' => 'Basalt\\Http\\Controllers\\PageController@addPage'
     ], [], [], '', [], Request::METHOD_POST));
 
+$routes->add('deletePage', new Route(
+    '/admin/{id}', [
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@deletePage'
+    ], [], [], '', [], Request::METHOD_DELETE));
+
 return $routes;

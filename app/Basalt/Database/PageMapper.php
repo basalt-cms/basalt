@@ -70,7 +70,7 @@ class PageMapper
 
     public function delete($id)
     {
-        $statement = $this->pdo->prepare('DELETE `page` WHERE `id` = :id');
+        $statement = $this->pdo->prepare('DELETE FROM `pages` WHERE `id` = :id');
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
 
         $statement->execute();

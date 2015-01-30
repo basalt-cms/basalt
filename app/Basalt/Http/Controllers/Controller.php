@@ -3,6 +3,7 @@
 namespace Basalt\Http\Controllers;
 
 use Basalt\App;
+use Basalt\Http\RedirectResponse;
 use Basalt\Http\Response;
 use Basalt\View;
 
@@ -40,5 +41,10 @@ class Controller
         $body = $this->view->render($name, $data);
 
         return new Response($body);
+    }
+
+    protected function redirect($to)
+    {
+        return new RedirectResponse($to);
     }
 } 

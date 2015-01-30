@@ -15,7 +15,7 @@ class Request
     /**
      * @var Input Input like GET or POST variables.
      */
-    protected $input;
+    public $input;
     /**
      * @var string HTTP method.
      */
@@ -26,8 +26,6 @@ class Request
      */
     public function __construct()
     {
-        $this->input = new Input(array_merge($_GET, $_POST));
-
         $this->extractInput();
         $this->setMethod();
     }
@@ -67,7 +65,7 @@ class Request
      */
     protected function extractInput()
     {
-        $this->input = array_merge($_GET, $_POST);
+        $this->input = new Input(array_merge($_GET, $_POST));
     }
 
     /**

@@ -39,18 +39,27 @@ class PageController extends Controller
 
     public function addPage()
     {
+        $input = $this->app->container->request->input;
+
         $page = new Page;
-        $page->name = $_POST['name'];
-        $page->slug = $_POST['slug'];
-        $page->content = $_POST['content'];
-        $page->draft = isset($_POST['draft']);
+        $page->name = $input->name;
+        $page->slug = $input->slug;
+        $page->content = $input->content;
+        $page->draft = isset($input->draft);
 
         $pageMapper = new PageMapper($this->app->container->pdo);
 
         try {
             $pageMapper->save($page);
+            $this->redirect('http://google.com');
         } catch (ValidationException $e) {
             // Errors etc.
         }
+    }
+
+    public function deletePage($id)
+    {
+        $pageMapper = new PageMapper($this->app->container->pdo);
+        $pageMapper->delete($id);
     }
 }

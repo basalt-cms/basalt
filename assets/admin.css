@@ -16,3 +16,7 @@
 .main { margin-left: 200px; padding: 15px; }
 
 .page-header { margin-top: 0; }
+
+.inline { display: inline; }
+.btn-hyperlink { display: inline; border: none; padding: 0 !important; background: none !important; color: #337ab7; cursor: pointer; } /* http://stackoverflow.com/questions/1367409/how-to-make-button-look-like-a-link */
+.btn-hyperlink:hover { color: #23527c; text-decoration: underline; }
