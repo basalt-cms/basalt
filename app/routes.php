@@ -11,9 +11,9 @@ $routes->add('index', new Route(
         '_controller' => 'Basalt\\Http\\Controllers\\PageController@page'
     ], [], [], '', [], Request::METHOD_GET));
 
-$routes->add('page', new Route(
-    '/{slug}', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PageController@page'
+$routes->add('dashboard', new Route(
+    '/admin', [
+        '_controller' => 'Basalt\\Http\\Controllers\\AdminPanelController@dashboard'
     ], [], [], '', [], Request::METHOD_GET));
 
 $routes->add('pages', new Route(
@@ -35,5 +35,10 @@ $routes->add('deletePage', new Route(
     '/admin/{id}', [
         '_controller' => 'Basalt\\Http\\Controllers\\PageController@deletePage'
     ], [], [], '', [], Request::METHOD_DELETE));
+
+$routes->add('page', new Route(
+    '/{slug}', [
+    '_controller' => 'Basalt\\Http\\Controllers\\PageController@page'
+], [], [], '', [], Request::METHOD_GET));
 
 return $routes;

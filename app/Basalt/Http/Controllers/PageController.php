@@ -60,8 +60,10 @@ class PageController extends Controller
 
     public function deletePage($id)
     {
-        $pageMapper = new PageMapper($this->app->container->pdo);
-        $pageMapper->delete($id);
+        if (1 != $id) {
+            $pageMapper = new PageMapper($this->app->container->pdo);
+            $pageMapper->delete($id);
+        }
 
         return $this->redirect('pages');
     }
