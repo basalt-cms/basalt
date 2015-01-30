@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="{{ 'bootstrap.css'|asset }}">
         <link rel="stylesheet" href="{{ 'admin.css'|asset }}">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic&amp;subset=latin-ext">
+        <style>textarea{resize:vertical}</style>
     </head>
     <body>
         <header class="header" role="banner">
@@ -28,5 +29,6 @@
         </main>
         <script src="{{ 'jquery.js'|asset }}"></script>
         <script src="{{ 'bootstrap.js'|asset }}"></script>
+        {% block scripts %}{% endblock %}
     </body>
 </html>

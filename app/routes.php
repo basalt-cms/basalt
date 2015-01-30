@@ -21,6 +21,14 @@ $routes->add('pages', new Route(
         '_controller' => 'Basalt\\Http\\Controllers\\PageController@pages'
     ], [], [], '', [], Request::METHOD_GET));
 
-//$pages
+$routes->add('newPage', new Route(
+    '/admin/pages/new', [
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@newPage'
+    ], [], [], '', [], Request::METHOD_GET));
+
+$routes->add('addPage', new Route(
+    '/admin/pages', [
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@addPage'
+    ], [], [], '', [], Request::METHOD_POST));
 
 return $routes;

@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
     <head>
-        <title>{{ title|e }}</title>
-        <link rel="stylesheet" href="assets/style.css">
+        <meta charset="UTF-8">
+        <title>Prorok</title>
+        <meta name="description" content="MTA:SA scripter">
+        <link rel="stylesheet" href="{{ 'page.css'|asset }}">
+        <!--[if lt IE 9]>
+            <!--<script src="html5shiv.js"></script>
+        <![endif]-->
     </head>
     <body>
-        <nav>
-            <ul>
-                {% for page in menu %}
-                    <li><a href="{{ 'page'|url({'slug': page.slug}) }}">{{ page.name|e }}</a></li>
-                {% endfor %}
-            </ul>
-        </nav>
-        <h1>{{ page.name|e }}</h1>
-        {{ page.content }}
+        <header class="header">
+            <h1>Prorok</h1>
+            <nav role="navigation">
+                <ul>
+                    {% for item in menu %}
+                        <li><a href="{{ 'page'|url({'slug': item.slug}) }}"{{ page.id == item.id ? ' class="active"' : '' }}>{{ item.name|e }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </header>
+        <main class="main" role="main">
+            {{ page.content }}
+        </main>
+        <footer class="footer" role="contentinfo">
+            <span class="left">Copyright &copy; John Doe, 2015</span>
+            <span class="right">Powered by Basalt. &bull; <a href="{{ 'pages'|url }}">AP</a></span>
+        </footer>
     </body>
 </html>

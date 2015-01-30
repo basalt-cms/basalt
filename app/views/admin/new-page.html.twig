@@ -1,0 +1,28 @@
+{% extends 'admin.html.twig' %}
+
+{% block content %}
+    <div class="page-header">
+        <a href="{{ 'pages'|url }}" class="btn btn-default pull-right">Back without saving</a>
+        <h1>New page</h1>
+    </div>
+    <form action="{{ 'addPage'|url }}" method="POST" class="form">
+        <div class="col-sm-6 form-group">
+            <label for="name">Page name</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="col-sm-6 form-group">
+            <label for="slug">Page slug</label>
+            <input type="text" id="slug" name="slug" class="form-control" required>
+        </div>
+        <div class="col-sm-12 form-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="content" rows="15" class="form-control"></textarea>
+        </div>
+        <p><input type="submit" value="Add page" class="btn btn-primary"> or <input type="submit" name="draft" value="save as draft" class="btn btn-default">
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ 'ckeditor/ckeditor.js'|asset }}"></script>
+    <script>CKEDITOR.replace('content');</script>
+{% endblock %}

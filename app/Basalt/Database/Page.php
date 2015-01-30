@@ -6,7 +6,7 @@ use Basalt\Exceptions\ValidationException;
 
 class Page
 {
-    public $id, $name, $slug, $content, $draft = 0;
+    public $id, $name, $slug, $content, $draft = false;
 
     public function validate()
     {

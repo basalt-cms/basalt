@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="page-header">
-        <a href="#" class="btn btn-default pull-right">Add new page</a>
+        <a href="{{ 'newPage'|url }}" class="btn btn-default pull-right">Add new page</a>
         <h1>Pages</h1>
     </div>
     <p class="alert alert-info">The rows which are marked with blue are drafts.</p>
@@ -15,7 +15,7 @@
         <thead>
             <tr>
                 <th>Page slug</th>
-                <th>Page title</th>
+                <th>Page name</th>
                 <th>Actions</th>
             </tr>
         </thead>

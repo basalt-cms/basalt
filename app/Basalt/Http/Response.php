@@ -12,10 +12,6 @@ class Response
      * @var int Status code.
      */
     protected $status;
-    /**
-     * @var string Document MIME type.
-     */
-    protected $mime;
 
     /**
      * Constructor.
@@ -24,11 +20,10 @@ class Response
      * @param int $status
      * @param string $mime
      */
-    public function __construct($body, $status = 200, $mime = 'text/html')
+    public function __construct($body, $status = 200)
     {
         $this->body = $body;
         $this->status = $status;
-        $this->mime = $mime;
     }
 
     /**
@@ -77,32 +72,11 @@ class Response
     }
 
     /**
-     * Get document MIME type.
-     *
-     * @return string
-     */
-    public function getMime()
-    {
-        return $this->mime;
-    }
-
-    /**
-     * Set document MIME type.
-     *
-     * @param $mime
-     */
-    public function setMime($mime)
-    {
-        $this->mime = $mime;
-    }
-
-    /**
      * Send response to client.
      */
     public function send()
     {
         header('HTTP/1.1 '.$this->status);
-        header(sprintf('Content-Type: %s;charset=UTF-8', $this->mime));
 
         echo $this->body;
     }
