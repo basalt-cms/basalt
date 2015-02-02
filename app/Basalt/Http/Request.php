@@ -16,6 +16,7 @@ class Request
      * @var Input Input like GET or POST variables.
      */
     public $input;
+
     /**
      * @var string HTTP method.
      */
@@ -41,7 +42,7 @@ class Request
     }
 
     /**
-     * Preapre RequestContext.
+     * Prepare RequestContext.
      *
      * @param RequestContext $context
      */

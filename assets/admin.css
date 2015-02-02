@@ -10,7 +10,7 @@
 .nav ul { list-style: none; margin: 0; padding: 0; }
 .nav a { display: block; padding: 0 15px; color: #fff; text-decoration: none; line-height: 40px; }
 .nav a:hover { background: #777; }
-.nav a.active { position: relative; background: #446cb3; }
+.nav a.active { position: relative; background: linear-gradient(#446cb3,#3C5E9B); }
 .nav a.active::after { content: ""; position: absolute; top: 0; bottom: 0; right: -5px; width: 10px; height: 10px; margin: auto 0; background: #fff; transform: rotate(45deg); }
 
 .main { margin-left: 200px; padding: 15px; }
@@ -20,3 +20,6 @@
 .inline { display: inline; }
 .btn-hyperlink { display: inline; border: none; padding: 0 !important; background: none !important; color: #337ab7; cursor: pointer; } /* http://stackoverflow.com/questions/1367409/how-to-make-button-look-like-a-link */
 .btn-hyperlink:hover { color: #23527c; text-decoration: underline; }
+
+.btn-default { background: linear-gradient(#fff, #eee); }
+.btn-primary, .btn-primary:hover { background: linear-gradient(#337ab7, #286090); }
