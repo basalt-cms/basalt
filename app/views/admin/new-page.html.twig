@@ -24,5 +24,16 @@
 
 {% block scripts %}
     <script src="{{ 'ckeditor/ckeditor.js'|asset }}"></script>
-    <script>CKEDITOR.replace('content');</script>
+    <script>
+        CKEDITOR.replace('content');
+        CKEDITOR.config.resize_enabled = false;
+
+        function resize() {
+            document.getElementById('cke_1_contents').style.height = (document.documentElement.offsetHeight - document.getElementsByTagName('main')[0].offsetHeight -
+            document.getElementsByTagName('header')[0].offsetHeight + document.getElementById('cke_1_contents').offsetHeight) + "px";
+        }
+
+        CKEDITOR.on('instanceReady', resize);
+        window.addEventListener('resize', resize);
+    </script>
 {% endblock %}
