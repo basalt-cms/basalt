@@ -38,6 +38,7 @@ class App
     {
         $this->runProviders();
         $this->prepareResponse();
+
         $this->container->response->send();
     }
 

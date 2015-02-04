@@ -5,9 +5,9 @@
         <a href="{{ 'newPage'|url }}" class="btn btn-default pull-right">Add new page</a>
         <h1>Pages</h1>
     </div>
-    {% for error in errors %}
-        <p>{{ error }}</p>
-    {% endfor %}
+    {% if message is not empty %}
+        <p class="alert alert-success">{{ message }}</p>
+    {% endif %}
     <p class="alert alert-info">The rows which are marked with blue are drafts.</p>
     <table class="table table-striped">
         <colgroup>

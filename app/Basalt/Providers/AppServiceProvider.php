@@ -2,6 +2,7 @@
 
 namespace Basalt\Providers;
 
+use Basalt\Http\Flash;
 use Basalt\Http\Request;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -28,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->container->generator = function($container) {
             return new UrlGenerator($container->routes, $container->context);
+        };
+
+        $this->app->container->flash = function() {
+            return new Flash;
         };
     }
 }

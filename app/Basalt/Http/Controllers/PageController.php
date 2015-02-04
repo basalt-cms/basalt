@@ -29,12 +29,14 @@ class PageController extends Controller
 
         $pages = $pageMapper->all(true);
 
-        return $this->render('admin.pages', compact('pages'));
+        $message = $this->app->container->flash->get('message');
+
+        return $this->render('admin.pages', compact('pages', 'message'));
     }
 
     public function newPage()
     {
-        return $this->render('admin.new-page');
+        return $this->render('admin.page');
     }
 
     public function addPage()
@@ -52,9 +54,13 @@ class PageController extends Controller
         try {
             $pageMapper->save($page);
 
+            $this->app->container->flash->flash('message', 'Page has been added succesful.');
+
             return $this->redirect('pages');
         } catch (ValidationException $e) {
-            // Errors etc.
+            $this->app->container->flash->flash('errors', $e->getErrors());
+
+            return $this->redirect('newPage');
         }
     }
 
