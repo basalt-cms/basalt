@@ -8,7 +8,7 @@
     {% for error in getFlash('errors') %}
         <p class="alert alert-danger">{{ error }}</p>
     {% endfor %}
-    <form action="{{ 'addPage'|url }}" method="POST" class="form">
+    {{ form('addPage', {'class':'form'}) }}
         <div class="col-sm-6 form-group">
             <label for="name">Page name</label>
             <input type="text" id="name" name="name" class="form-control" required>
@@ -22,7 +22,7 @@
             <textarea id="content" name="content" rows="15" class="form-control"></textarea>
         </div>
         <p><input type="submit" value="Add page" class="btn btn-primary"> or <input type="submit" name="draft" value="save as draft" class="btn btn-default">
-    </form>
+    {{ endForm() }}
 {% endblock %}
 
 {% block scripts %}
