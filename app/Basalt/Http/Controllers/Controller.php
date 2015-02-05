@@ -6,6 +6,7 @@ use Basalt\App;
 use Basalt\Http\RedirectResponse;
 use Basalt\Http\Response;
 use Basalt\View;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class Controller
 {
@@ -50,20 +51,30 @@ class Controller
      */
     protected function redirect($to, $external = false)
     {
-        if ($external) {
+        if (!$external) {
             if (is_array($to)) {
-                $name = $to[0];
-                $parameters = $to[1];
+                list($name, $parameters) = $to;
             } else {
                 $name = $to;
                 $parameters = [];
             }
 
-            $url = $this->app->container->generator->generate($name, $parameters);
+            $url = $this->app->container->mainUrl.'index.php/'.$this->app->container->generator->generate($name, $parameters, UrlGenerator::RELATIVE_PATH); // TODO: Embrace this brothel
 
             return new RedirectResponse($url);
         }
 
         return new RedirectResponse($to);
     }
+
+    protected function flash($name, $value)
+    {
+        $this->app->container->flash->flash($name, $value);
+    }
+    
+    protected function getFlash($name)
+    {
+        return $this->app->container->flash->get($name);
+    }
+
 } 

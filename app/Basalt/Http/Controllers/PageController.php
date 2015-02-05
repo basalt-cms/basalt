@@ -29,7 +29,7 @@ class PageController extends Controller
 
         $pages = $pageMapper->all(true);
 
-        $message = $this->app->container->flash->get('message');
+        $message = $this->getFlash('message');
 
         return $this->render('admin.pages', compact('pages', 'message'));
     }
@@ -54,11 +54,11 @@ class PageController extends Controller
         try {
             $pageMapper->save($page);
 
-            $this->app->container->flash->flash('message', 'Page has been added succesful.');
+            $this->flash('message', 'Page has been added succesful.');
 
             return $this->redirect('pages');
         } catch (ValidationException $e) {
-            $this->app->container->flash->flash('errors', $e->getErrors());
+            $this->flash('errors', $e->getErrors());
 
             return $this->redirect('newPage');
         }
@@ -69,6 +69,8 @@ class PageController extends Controller
         if (1 != $id) {
             $pageMapper = new PageMapper($this->app->container->pdo);
             $pageMapper->delete($id);
+
+            $this->flash('message', 'Page has been deleted succesful.');
         }
 
         return $this->redirect('pages');

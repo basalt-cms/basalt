@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
 class TwigServiceProvider extends ServiceProvider
 {
     public function provide(){
-        $this->app->container->twig = function() {
+        $this->app->container->twig = function($container) {
             $twigLoader = new \Twig_Loader_Filesystem(dirname(dirname(dirname(__FILE__))).'/views');
 
             $twig = new \Twig_Environment($twigLoader, [
@@ -22,9 +22,13 @@ class TwigServiceProvider extends ServiceProvider
                 $container = $this->app->container;
                 return $container->mainUrl.'index.php/'.$container->generator->generate($name, $parameters, UrlGenerator::RELATIVE_PATH); // TODO: Embrace this brothel
             });
+            $getFlashFunction = new \Twig_SimpleFunction('getFlash', function($name) use($container) {
+                return $container->flash->get($name);
+            });
 
             $twig->addFilter($assetFilter);
             $twig->addFilter($urlFilter);
+            $twig->addFunction($getFlashFunction);
 
             return $twig;
         };

@@ -5,9 +5,9 @@
         <a href="{{ 'pages'|url }}" class="btn btn-default pull-right">Back without saving</a>
         <h1>New page</h1>
     </div>
-    {% if errors is not empty %}
-        <p class="alert alert-danger">{{ errors }}</p>
-    {% endif %}
+    {% for error in getFlash('errors') %}
+        <p class="alert alert-danger">{{ error }}</p>
+    {% endfor %}
     <form action="{{ 'addPage'|url }}" method="POST" class="form">
         <div class="col-sm-6 form-group">
             <label for="name">Page name</label>
