@@ -8,21 +8,21 @@
     {% for error in getFlash('errors') %}
         <p class="alert alert-danger">{{ error }}</p>
     {% endfor %}
-    {{ form('addPage', {'class':'form'}) }}
+    {{ form('addPage', {'class': 'form'}) }}
         <div class="col-sm-6 form-group">
             <label for="name">Page name</label>
-            <input type="text" id="name" name="name" class="form-control" required>
+            {{ text('name', '', {'id': 'name', 'class': 'form-control', 2: 'required'}) }}
         </div>
         <div class="col-sm-6 form-group">
             <label for="slug">Page slug</label>
-            <input type="text" id="slug" name="slug" class="form-control" required>
+            {{ text('slug', '', {'id': 'slug', 'class': 'form-control', 2: 'required'}) }}
         </div>
         <div class="col-sm-12 form-group">
             <label for="content">Content</label>
-            <textarea id="content" name="content" rows="15" class="form-control"></textarea>
+            {{ text('textarea', '', {'id': 'content', 'rows': 15, 'class': 'form-control'}) }}
         </div>
-        <p><input type="submit" value="Add page" class="btn btn-primary"> or <input type="submit" name="draft" value="save as draft" class="btn btn-default">
-    {{ endForm() }}
+        <p>{{ submit('Add page', {'class': 'btn btn-primary'}) }} or {{ input('submit', 'draft', 'save as draft', {'class': 'btn btn-default'}) }}</p>
+    {{ closeForm() }}
 {% endblock %}
 
 {% block scripts %}

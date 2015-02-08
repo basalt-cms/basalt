@@ -30,18 +30,12 @@ class TwigServiceProvider extends ServiceProvider
             $getFlashFunction = new \Twig_SimpleFunction('getFlash', function($name) use($container) {
                 return $container->flash->get($name);
             });
-            $formFunction = new \Twig_SimpleFunction('form', function($route, $parameters = []) use($container) {
-                return $container->htmlHelper->form($route, $parameters);
-            });
-            $endFormFunction = new \Twig_SimpleFunction('endForm', function() use($container) {
-                return $container->htmlHelper->endForm();
-            });
 
             $twig->addFilter($assetFilter);
             $twig->addFilter($urlFilter);
             $twig->addFunction($getFlashFunction);
-            $twig->addFunction($formFunction);
-            $twig->addFunction($endFormFunction);
+
+            $twig->addExtension(new HtmlHelper($this->app));
 
             return $twig;
         };
