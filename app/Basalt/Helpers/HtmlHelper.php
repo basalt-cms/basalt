@@ -41,16 +41,12 @@ class HtmlHelper extends Twig_Extension
         $route = $this->app->container->routes->get($routeName);
         $method = $route->getMethods()[0];
         $url = $this->app->container->mainUrl.'index.php/'.$this->app->container->generator->generate($routeName, [], UrlGenerator::RELATIVE_PATH); // TODO: Embrace this brothel
+        $parameters = $this->buildParameters($parameters);
 
-        $params = '';
-        foreach ($parameters as $key => $value) {
-            $params .= ' '.$key.'="'.$value.'"';
-        }
-
-        $html = '<form action="'.$url.'" method="POST"'.$params.'>';
+        $html = sprintf('<form action="%s" method="POST"%s>', $url, $parameters);
 
         if ($method != Request::METHOD_POST) {
-            $html .= '<input type="hidden" name="'. Request::METHOD_OVERRIDE.'" value="'.$method.'">';
+            $html .= sprintf('<input type="hidden" name="%s" value="%s">', Request::METHOD_OVERRIDE, $method);
         }
 
         return $html;
