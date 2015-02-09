@@ -4,6 +4,9 @@ namespace Basalt\Providers;
 
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Basalt\Helpers\HtmlHelper;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
+use Twig_SimpleFunction;
 
 class TwigServiceProvider extends ServiceProvider
 {
@@ -13,26 +16,26 @@ class TwigServiceProvider extends ServiceProvider
         };
 
         $this->app->container->twig = function($container) {
-            $twigLoader = new \Twig_Loader_Filesystem(dirname(dirname(dirname(__FILE__))).'/views');
+            $twigLoader = new Twig_Loader_Filesystem(dirname(dirname(dirname(__FILE__))).'/views');
 
-            $twig = new \Twig_Environment($twigLoader, [
+            $twig = new Twig_Environment($twigLoader, [
                 //'cache' => '../cache/twig',
                 'autoescape' => false
             ]);
 
-            $assetFilter = new \Twig_SimpleFilter('asset', function($name) {
-                return $this->app->container->mainUrl.'assets/'.$name;
+            $assetFunction = new Twig_SimpleFunction('asset', function($fileName) {
+                return $this->app->container->mainUrl.'assets/'.$fileName;
             });
-            $urlFilter = new \Twig_SimpleFilter('url', function($name, $parameters = []) {
+            $urlFunction = new Twig_SimpleFunction('url', function($name, $parameters = []) {
                 $container = $this->app->container;
                 return $container->mainUrl.'index.php/'.$container->generator->generate($name, $parameters, UrlGenerator::RELATIVE_PATH); // TODO: Embrace this brothel
             });
-            $getFlashFunction = new \Twig_SimpleFunction('getFlash', function($name) use($container) {
+            $getFlashFunction = new Twig_SimpleFunction('getFlash', function($name) use($container) {
                 return $container->flash->get($name);
             });
 
-            $twig->addFilter($assetFilter);
-            $twig->addFilter($urlFilter);
+            $twig->addFunction($assetFunction);
+            $twig->addFunction($urlFunction);
             $twig->addFunction($getFlashFunction);
 
             $twig->addExtension(new HtmlHelper($this->app));

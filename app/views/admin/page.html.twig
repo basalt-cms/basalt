@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="page-header">
-        <a href="{{ 'pages'|url }}" class="btn btn-default pull-right">Back without saving</a>
+        <a href="{{ url('pages') }}" class="btn btn-default pull-right">Back without saving</a>
         <h1>New page</h1>
     </div>
     {% for error in getFlash('errors') %}
@@ -19,14 +19,14 @@
         </div>
         <div class="col-sm-12 form-group">
             <label for="content">Content</label>
-            {{ text('textarea', '', {'id': 'content', 'rows': 15, 'class': 'form-control'}) }}
+            {{ textarea('content', '', {'id': 'content', 'rows': 15, 'class': 'form-control'}) }}
         </div>
         <p>{{ submit('Add page', {'class': 'btn btn-primary'}) }} or {{ input('submit', 'draft', 'save as draft', {'class': 'btn btn-default'}) }}</p>
     {{ closeForm() }}
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ 'ckeditor/ckeditor.js'|asset }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script>
         CKEDITOR.replace('content');
         CKEDITOR.config.resize_enabled = false;

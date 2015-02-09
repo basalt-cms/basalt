@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Basalt Admin Panel</title>
-        <link rel="stylesheet" href="{{ 'bootstrap.css'|asset }}">
-        <link rel="stylesheet" href="{{ 'admin.css'|asset }}">
+        <link rel="stylesheet" href="{{ asset('bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('admin.css') }}">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic&amp;subset=latin-ext">
         <style>textarea{resize:vertical}</style>
     </head>
@@ -12,14 +12,14 @@
         <header class="header" role="banner">
             <h1>Basalt</h1>
             <ul>
-                <li><a href="{{ 'index'|url }}">Back to site</a></li>
+                <li><a href="{{ url('index') }}">Back to site</a></li>
                 <li><a href="#"><img src="http://gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=40" alt="Gravatar"> Log out</a></li>
             </ul>
         </header>
         <nav class="nav" role="navigation">
             <ul>
-                <li><a href="{{ 'dashboard'|url }}">Dashboard</a></li>
-                <li><a href="{{ 'pages'|url }}" class="active">Pages</a></li>
+                <li><a href="{{ url('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url('pages') }}" class="active">Pages</a></li>
                 <li><a href="#">Plugins</a></li>
                 <li><a href="#">Settings</a></li>
             </ul>
@@ -27,8 +27,8 @@
         <main class="main" role="main">
             {% block content %}{% endblock %}
         </main>
-        <script src="{{ 'jquery.js'|asset }}"></script>
-        <script src="{{ 'bootstrap.js'|asset }}"></script>
+        <script src="{{ asset('jquery.js') }}"></script>
+        <script src="{{ asset('bootstrap.js') }}"></script>
         {% block scripts %}{% endblock %}
     </body>
 </html>

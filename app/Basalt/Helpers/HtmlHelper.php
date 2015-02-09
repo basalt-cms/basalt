@@ -36,11 +36,18 @@ class HtmlHelper extends Twig_Extension
         return 'HtmlHelper';
     }
 
-    public function form($routeName, $parameters = [])
+    public function form($route, $parameters = [])
     {
+        if (is_array($route)) {
+            list($routeName, $routeParameters) = $route;
+        } else {
+            $routeName = $route;
+            $routeParameters = [];
+        }
+
         $route = $this->app->container->routes->get($routeName);
         $method = $route->getMethods()[0];
-        $url = $this->app->container->mainUrl.'index.php/'.$this->app->container->generator->generate($routeName, [], UrlGenerator::RELATIVE_PATH); // TODO: Embrace this brothel
+        $url = $this->app->container->mainUrl.'index.php/'.$this->app->container->generator->generate($routeName, $routeParameters, UrlGenerator::RELATIVE_PATH); // TODO: Embrace this brothel
         $parameters = $this->buildParameters($parameters);
 
         $html = sprintf('<form action="%s" method="POST"%s>', $url, $parameters);

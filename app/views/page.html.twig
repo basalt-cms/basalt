@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>{{ page.name|e }} &ndash; Website</title>
         <meta name="description" content="Description.">
-        <link rel="stylesheet" href="{{ 'page.css'|asset }}">
+        <link rel="stylesheet" href="{{ asset('page.css') }}">
         <!--[if lt IE 9]>
             <!--<script src="html5shiv.js"></script>
         <![endif]-->
@@ -15,7 +15,7 @@
             <nav role="navigation">
                 <ul>
                     {% for item in menu %}
-                        <li><a href="{{ 'page'|url({'slug': item.slug}) }}"{{ page.id == item.id ? ' class="active"': '' }}>{{ item.name|e }}</a></li>
+                        <li><a href="{{ url('page', {'slug': item.slug}) }}"{{ page.id == item.id ? ' class="active"': '' }}>{{ item.name|e }}</a></li>
                     {% endfor %}
                 </ul>
             </nav>
@@ -25,7 +25,7 @@
         </main>
         <footer class="footer" role="contentinfo">
             <span class="left">Copyright &copy; John Doe, 2015</span>
-            <span class="right">Powered by Basalt &bull; <a href="{{ 'dashboard'|url }}">AP</a></span>
+            <span class="right">Powered by Basalt &bull; <a href="{{ url('dashboard') }}">AP</a></span>
         </footer>
     </body>
 </html>

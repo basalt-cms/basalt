@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="page-header">
-        <a href="{{ 'newPage'|url }}" class="btn btn-default pull-right">Add new page</a>
+        <a href="{{ url('newPage') }}" class="btn btn-default pull-right">Add new page</a>
         <h1>Pages</h1>
     </div>
     {% if message is not empty %}
@@ -30,10 +30,9 @@
                     <td>
                         <a href="#">Edit</a>
                         {% if page.id != 1 %}
-                            <form action="{{ 'deletePage'|url({'id': page.id}) }}" method="POST" class="inline">
-                                <input type="hidden" name="_METHOD" value="DELETE">
-                                <input type="submit" class="btn-hyperlink" value="Delete">
-                            </form>
+                            {{ form(['deletePage', {'id': page.id}], {'class': 'inline'}) }}
+                                {{ submit('Delete', {'class': 'btn-hyperlink'}) }}
+                            {{ closeForm() }}
                         {% else %}
                             <del title="You cannot delete main page!">Delete</del>
                         {% endif %}
