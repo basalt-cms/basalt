@@ -11,11 +11,11 @@
     {{ form('addPage', {'class': 'form'}) }}
         <div class="col-sm-6 form-group">
             <label for="name">Page name</label>
-            {{ text('name', '', {'id': 'name', 'class': 'form-control', 2: 'required'}) }}
+            {{ text('name', '', {'id': 'name', 'class': 'form-control', 0: 'required'}) }}
         </div>
         <div class="col-sm-6 form-group">
             <label for="slug">Page slug</label>
-            {{ text('slug', '', {'id': 'slug', 'class': 'form-control', 2: 'required'}) }}
+            {{ text('slug', '', {'id': 'slug', 'class': 'form-control', 0: 'required'}) }}
         </div>
         <div class="col-sm-12 form-group">
             <label for="content">Content</label>

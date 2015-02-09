@@ -13,3 +13,5 @@ matrix:
 before_script:
   - composer self-update
   - composer install --prefer-source --dev --no-interaction
+
+script:
