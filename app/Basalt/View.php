@@ -7,8 +7,9 @@ class View
     protected $app;
 
     /**
-     * Constructor
-     * @param App $app
+     * Constructor.
+     *
+     * @param \Basalt\App $app Application.
      */
     public function __construct(App $app)
     {
@@ -18,8 +19,8 @@ class View
     /**
      * Return rendered view.
      *
-     * @param $name
-     * @param array $data
+     * @param string $name Name of the view to render.
+     * @param array $data Data.
      * @return string
      */
     public function render($name, $data = [])

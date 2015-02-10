@@ -13,14 +13,17 @@ class Response
      */
     protected $status;
 
+    /**
+     * @var array Headers array.
+     */
     protected $headers;
 
     /**
      * Constructor.
      *
-     * @param string $body
-     * @param int $status
-     * @param array $headers
+     * @param string $body Response body.
+     * @param int $status Status code
+     * @param array $headers Headers array.
      */
     public function __construct($body, $status = 200, array $headers = [])
     {
@@ -43,6 +46,7 @@ class Response
      * Set response body.
      *
      * @param $body
+     * @return void
      */
     public function setBody($body)
     {
@@ -64,6 +68,7 @@ class Response
      *
      * @param $status
      * @throws \InvalidArgumentException
+     * @return void
      */
     public function setStatus($status)
     {
@@ -76,6 +81,8 @@ class Response
 
     /**
      * Send response to client.
+     *
+     * @return void
      */
     public function send()
     {

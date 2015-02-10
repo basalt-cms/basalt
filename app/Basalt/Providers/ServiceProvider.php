@@ -12,9 +12,9 @@ abstract class ServiceProvider
     protected $app;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param \Basalt\App $app
+     * @param \Basalt\App $app Application.
      */
     public function __construct(App $app)
     {
@@ -23,6 +23,8 @@ abstract class ServiceProvider
 
     /**
      * Provide service.
+     *
+     * @return void
      */
     abstract public function provide();
 } 

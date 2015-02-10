@@ -4,8 +4,16 @@ namespace Basalt\Http;
 
 class Input
 {
+    /**
+     * @var array Array with input stuff.
+     */
     protected $input;
 
+    /**
+     * Constructor.
+     *
+     * @param array $input Input.
+     */
     public function __construct(array $input)
     {
         $this->input = $input;

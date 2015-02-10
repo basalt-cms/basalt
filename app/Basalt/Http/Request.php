@@ -13,7 +13,7 @@ class Request
     const METHOD_OVERRIDE = '_METHOD';
 
     /**
-     * @var Input Input like GET or POST variables.
+     * @var \Basalt\Http\Input Input.
      */
     public $input;
 
@@ -23,7 +23,7 @@ class Request
     protected $method;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -44,7 +44,8 @@ class Request
     /**
      * Prepare RequestContext.
      *
-     * @param RequestContext $context
+     * @param \Symfony\Component\Routing\RequestContext $context Request context.
+     * @return void
      */
     public function prepareContext(RequestContext &$context)
     {
@@ -52,7 +53,7 @@ class Request
     }
 
     /**
-     * Is request sended by ajax?
+     * Is request sent by ajax?
      *
      * @return bool
      */
@@ -63,6 +64,8 @@ class Request
 
     /**
      * Extract input variables.
+     *
+     * @return void
      */
     protected function extractInput()
     {
@@ -71,6 +74,8 @@ class Request
 
     /**
      * Set HTTP method.
+     *
+     * @return void
      */
     protected function setMethod()
     {

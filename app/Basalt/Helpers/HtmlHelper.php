@@ -10,13 +10,24 @@ use Twig_SimpleFunction;
 
 class HtmlHelper extends Twig_Extension
 {
+    /**
+     * @var \Basalt\App Application.
+     */
     protected $app;
 
+    /**
+     * Constructor.
+     *
+     * @param \Basalt\App $app Application.
+     */
     public function __construct(App $app)
     {
         $this->app = $app;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getFunctions()
     {
         return [
@@ -31,11 +42,21 @@ class HtmlHelper extends Twig_Extension
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'HtmlHelper';
     }
 
+    /**
+     * Return HTML form tag.
+     *
+     * @param string|array $route Route name and optional parameters for action.
+     * @param array $parameters HTML parameters.
+     * @return string
+     */
     public function form($route, $parameters = [])
     {
         if (is_array($route)) {
@@ -59,11 +80,25 @@ class HtmlHelper extends Twig_Extension
         return $html;
     }
 
+    /**
+     * Return HTML close form tag.
+     *
+     * @return string
+     */
     public function closeForm()
     {
         return '</form>';
     }
 
+    /**
+     * Return HTML input tag.
+     *
+     * @param string $type Input tag type.
+     * @param string $name Name.
+     * @param string $default Default value.
+     * @param array $parameters HTML parameters.
+     * @return string
+     */
     public function input($type, $name = '', $default = '', $parameters = [])
     {
         $default = (empty($default)) ? '' : ' value="' . $default . '"';
@@ -72,21 +107,52 @@ class HtmlHelper extends Twig_Extension
         return sprintf('<input type="%s" name="%s"%s>', $type, $name, $default . $parameters);
     }
 
+    /**
+     * Return HTML email input tag.
+     *
+     * @param string $name Name.
+     * @param string $default Default value.
+     * @param array $parameters HTML parameters.
+     * @return string
+     */
     public function email($name, $default = '', $parameters = [])
     {
         return $this->input('email', $name, $default, $parameters);
     }
 
-    public function password($name, $default = '', $parameters = [])
+    /**
+     * Return HTML password input tag.
+     *
+     * @param string $name Name.
+     * @param array $parameters HTML parameters.
+     * @return string
+     */
+    public function password($name, $parameters = [])
     {
-        return $this->input('password', $name, $default, $parameters);
+        return $this->input('password', $name, '', $parameters);
     }
 
+    /**
+     * Return HTML text input tag.
+     *
+     * @param string $name Name.
+     * @param string $default Default value.
+     * @param array $parameters HTML parameters.
+     * @return string
+     */
     public function text($name, $default = '', $parameters = [])
     {
         return $this->input('text', $name, $default, $parameters);
     }
 
+    /**
+     * Return HTML textarea tag.
+     *
+     * @param string $name Name.
+     * @param string $default Default value.
+     * @param array $parameters HTML parameters.
+     * @return string
+     */
     public function textarea($name, $default = '', $parameters = [])
     {
         $parameters = $this->buildParameters($parameters);
@@ -94,6 +160,13 @@ class HtmlHelper extends Twig_Extension
         return sprintf('<textarea name="%s"%s>%s</textarea>', $name, $parameters, $default);
     }
 
+    /**
+     * Return HTML submit input tag.
+     *
+     * @param string $text Submit button label.
+     * @param array $parameters HTML parameters.
+     * @return string
+     */
     public function submit($text, $parameters = [])
     {
         $parameters = $this->buildParameters($parameters);
@@ -101,6 +174,12 @@ class HtmlHelper extends Twig_Extension
         return sprintf('<input type="submit" value="%s"%s>', $text, $parameters);
     }
 
+    /**
+     * Build string with parameters ready to paste into the HTML tag.
+     *
+     * @param array $parameters HTML parameters
+     * @return string
+     */
     protected function buildParameters($parameters)
     {
         $params = '';

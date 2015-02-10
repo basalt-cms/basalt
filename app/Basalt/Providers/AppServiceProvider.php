@@ -10,6 +10,9 @@ use Symfony\Component\Routing\RequestContext;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * {@inheritdoc}
+     */
     public function provide()
     {
         $this->app->container->request = function() {

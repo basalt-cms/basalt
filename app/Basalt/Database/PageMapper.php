@@ -6,13 +6,27 @@ use PDO;
 
 class PageMapper
 {
+    /**
+     * @var \PDO PDO.
+     */
     protected $pdo;
 
+    /**
+     * Constructor.
+     *
+     * @param PDO $pdo PDO.
+     */
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
 
+    /**
+     * Return Page by slug.
+     *
+     * @param string $slug Page slug.
+     * @return \Basalt\Database\Page|null
+     */
     public function get($slug)
     {
         $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `slug` = :slug');
@@ -23,6 +37,11 @@ class PageMapper
         return $statement->fetchObject('\Basalt\Database\Page') ?: null;
     }
 
+    /**
+     * Return index page.
+     *
+     * @return \Basalt\Database\Page|null
+     */
     public function getIndex()
     {
         $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = 1');
@@ -32,6 +51,12 @@ class PageMapper
         return $statement->fetchObject('\Basalt\Database\Page') ?: null;
     }
 
+    /**
+     * Return all pages.
+     *
+     * @param bool $drafts Should it return drafts?
+     * @return null
+     */
     public function all($drafts = false)
     {
         $drafts = $drafts ? '' : ' WHERE `draft` = 0';
@@ -42,6 +67,13 @@ class PageMapper
         return $statement->fetchAll(PDO::FETCH_CLASS, '\Basalt\Database\Page') ?: null;
     }
 
+    /**
+     * Save the page.
+     *
+     * @param \Basalt\Database\Page $page Page.
+     * @throws \Basalt\Exceptions\ValidationException
+     * @return void
+     */
     public function save(Page &$page)
     {
         $page->validate();
@@ -68,6 +100,11 @@ class PageMapper
         }
     }
 
+    /**
+     * Delete page by id.
+     *
+     * @param int $id Page id.
+     */
     public function delete($id)
     {
         $statement = $this->pdo->prepare('DELETE FROM `pages` WHERE `id` = :id');

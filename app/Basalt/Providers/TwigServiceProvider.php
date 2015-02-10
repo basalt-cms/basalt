@@ -10,6 +10,9 @@ use Twig_SimpleFunction;
 
 class TwigServiceProvider extends ServiceProvider
 {
+    /**
+     * {@inheritdoc}
+     */
     public function provide(){
         $this->app->container->htmlHelper = function() {
             return new HtmlHelper($this->app);

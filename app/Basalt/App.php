@@ -10,16 +10,16 @@ use Basalt\Providers\ServiceProvider;
 class App
 {
     /**
-     * @var array Config;
+     * @var array Config array.
      */
     public $config;
     /**
-     * @var \Basalt\Container Container.
+     * @var \Basalt\Container Inversion of control container.
      */
     public $container;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @throws ConfigNotFoundException
      */
@@ -33,6 +33,8 @@ class App
 
     /**
      * Run providers and send response.
+     *
+     * @return void
      */
     public function run()
     {
@@ -46,6 +48,7 @@ class App
      * Load configuration file.
      *
      * @throws ConfigNotFoundException
+     * @return void
      */
     protected function loadConfig()
     {
@@ -60,6 +63,8 @@ class App
 
     /**
      * Run providers.
+     *
+     * @return void
      */
     protected function runProviders()
     {
@@ -78,6 +83,8 @@ class App
 
     /**
      * Prepare response.
+     *
+     * @return void
      */
     protected function prepareResponse()
     {

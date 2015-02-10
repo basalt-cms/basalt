@@ -6,6 +6,9 @@ use PDO;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
+    /**
+     * {@inheritdoc}
+     */
     public function provide()
     {
         $this->app->container->pdo = function($container) {

@@ -5,18 +5,18 @@ namespace Basalt;
 class Container
 {
     /**
-     * @var \Basalt\App Application
+     * @var \Basalt\App Application.
      */
     public $app;
     /**
-     * @var array Data.
+     * @var array Data array.
      */
     protected $data = [];
 
     /**
      * Constructor.
      *
-     * @param \Basalt\App $app
+     * @param \Basalt\App $app Application.
      */
     public function __construct(App $app)
     {

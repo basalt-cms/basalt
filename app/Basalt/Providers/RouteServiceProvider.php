@@ -5,6 +5,9 @@ namespace Basalt\Providers;
 
 class RouteServiceProvider extends ServiceProvider
 {
+    /**
+     * {@inheritdoc}
+     */
     public function provide()
     {
         $this->app->container->routes = function() {

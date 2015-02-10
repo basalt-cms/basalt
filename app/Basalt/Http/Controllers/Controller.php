@@ -33,8 +33,8 @@ class Controller
     /**
      * Return response.
      *
-     * @param $name
-     * @param array $data
+     * @param string $name Name of the view to render.
+     * @param array $data Data
      * @return \Basalt\Http\Response
      */
     protected function render($name, $data = [])
@@ -45,9 +45,11 @@ class Controller
     }
 
     /**
-     * @param string|array $to
-     * @return RedirectResponse
-     * @param boolean $external
+     * Return redirect response.
+     *
+     * @param string|array $to URL or route name and parameters to redirect.
+     * @param boolean $external Is it external URL?
+     * @return \Basalt\Http\RedirectResponse
      */
     protected function redirect($to, $external = false)
     {
@@ -67,11 +69,24 @@ class Controller
         return new RedirectResponse($to);
     }
 
+    /**
+     * Flash value.
+     *
+     * @param string $name Flash message name.
+     * @param mixed $value Value to flash.
+     * @return void
+     */
     protected function flash($name, $value)
     {
         $this->app->container->flash->flash($name, $value);
     }
-    
+
+    /**
+     * Return flashed message.
+     *
+     * @param string $name Flash message name.
+     * @return mixed
+     */
     protected function getFlash($name)
     {
         return $this->app->container->flash->get($name);
