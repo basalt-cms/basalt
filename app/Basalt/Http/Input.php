@@ -2,7 +2,7 @@
 
 namespace Basalt\Http;
 
-class Input
+class Input implements \ArrayAccess
 {
     /**
      * @var array Array with input stuff.
@@ -19,13 +19,23 @@ class Input
         $this->input = $input;
     }
 
-    public function __get($name)
+    public function offsetExists($offset)
     {
-        return $this->input[$name];
+        return isset($this->input[$offset]);
     }
 
-    public function __isset($name)
+    public function offsetGet($offset)
     {
-        return isset($this->input[$name]);
+        return $this->input[$offset];
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        // You cannot change it.
+    }
+
+    public function offsetUnset($offset)
+    {
+        // You cannot unset it.
     }
 }

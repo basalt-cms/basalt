@@ -16,6 +16,11 @@ class HtmlHelper extends Twig_Extension
     protected $app;
 
     /**
+     * @var \Basalt\Http\Input Flashed input.
+     */
+    protected $flash;
+
+    /**
      * Constructor.
      *
      * @param \Basalt\App $app Application.
@@ -23,6 +28,7 @@ class HtmlHelper extends Twig_Extension
     public function __construct(App $app)
     {
         $this->app = $app;
+        $this->flash = unserialize($this->app->container->flash->get('input'));
     }
 
     /**
@@ -101,7 +107,9 @@ class HtmlHelper extends Twig_Extension
      */
     public function input($type, $name = '', $default = '', $parameters = [])
     {
-        $default = (empty($default)) ? '' : ' value="' . $default . '"';
+        $default = (empty($default)) ? $this->flash[$name] : $default;
+        $default = (empty($default)) ? '' : sprintf(' value="%s"', $default);
+
         $parameters = $this->buildParameters($parameters);
 
         return sprintf('<input type="%s" name="%s"%s>', $type, $name, $default . $parameters);

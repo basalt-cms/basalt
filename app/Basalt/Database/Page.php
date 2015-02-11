@@ -8,7 +8,7 @@ class Page
 {
     public $id, $name, $slug, $content, $draft = false;
 
-    public function validate()
+    public function validate() // TODO: Validator
     {
         $errors = [];
 
@@ -26,9 +26,7 @@ class Page
         }
 
         if (!empty($errors)) {
-            $exception = new ValidationException($errors);
-
-            throw $exception;
+            throw new ValidationException($errors);
         }
     }
 } 

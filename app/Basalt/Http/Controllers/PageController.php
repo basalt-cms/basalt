@@ -44,10 +44,10 @@ class PageController extends Controller
         $input = $this->app->container->request->input;
 
         $page = new Page;
-        $page->name = $input->name;
-        $page->slug = $input->slug;
-        $page->content = $input->content;
-        $page->draft = isset($input->draft);
+        $page->name = $input['name'];
+        $page->slug = $input['slug'];
+        $page->content = $input['content'];
+        $page->draft = isset($input['draft']);
 
         $pageMapper = new PageMapper($this->app->container->pdo);
 
@@ -59,6 +59,7 @@ class PageController extends Controller
             return $this->redirect('pages');
         } catch (ValidationException $e) {
             $this->flash('errors', $e->getErrors());
+            $this->flash('input', serialize($this->app->container->request->input));
 
             return $this->redirect('newPage');
         }
@@ -66,7 +67,7 @@ class PageController extends Controller
 
     public function deletePage($id)
     {
-        if (1 != $id) {
+        if (1 !== $id) {
             $pageMapper = new PageMapper($this->app->container->pdo);
             $pageMapper->delete($id);
 

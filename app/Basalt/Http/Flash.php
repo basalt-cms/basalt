@@ -15,7 +15,7 @@ class Flash
      */
     public function get($name, $delete = true)
     {
-        if (isset($_SESSION[$name = self::MESSAGE_PREFIX.$name])) {
+        if (isset($_SESSION[$name = self::MESSAGE_PREFIX . $name])) {
             $value = $_SESSION[$name];
 
             if ($delete) {
@@ -37,6 +37,6 @@ class Flash
      */
     public function flash($name, $value)
     {
-        $_SESSION[self::MESSAGE_PREFIX.$name] = $value;
+        $_SESSION[self::MESSAGE_PREFIX . $name] = $value;
     }
 }
