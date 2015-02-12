@@ -163,6 +163,7 @@ class HtmlHelper extends Twig_Extension
      */
     public function textarea($name, $default = '', $parameters = [])
     {
+        $default = (isset($this->flash[$name])) ? $this->flash[$name] : $default;
         $parameters = $this->buildParameters($parameters);
 
         return sprintf('<textarea name="%s"%s>%s</textarea>', $name, $parameters, $default);

@@ -9,6 +9,6 @@ class IsSlug extends Base implements RuleInterface
 {
     public function execute()
     {
-        return 1 === preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $this->slug);
+        return 1 === preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $this->value);
     }
 }
