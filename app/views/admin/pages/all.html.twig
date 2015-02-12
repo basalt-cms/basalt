@@ -30,7 +30,7 @@
                     <td>
                         <a href="{{ url('editPage', {'id': page.id}) }}">Edit</a>
                         {% if page.id != 1 %}
-                            {{ form(['deletePage', {'id': page.id}], {'class': 'inline'}) }}
+                            {{ form(['deletePage', {'id': page.id}], {'class': 'delete inline'}) }}
                                 {{ submit('Delete', {'class': 'btn-hyperlink'}) }}
                             {{ closeForm() }}
                         {% else %}
@@ -45,4 +45,16 @@
             {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.getElementsByClassName('table')[0].addEventListener('submit', function(e) {
+            if (e.target.classList.contains('delete')) {
+                if (!confirm('Do you really want to delete this page?')) {
+                    e.preventDefault();
+                }
+            }
+        });
+    </script>
 {% endblock %}
