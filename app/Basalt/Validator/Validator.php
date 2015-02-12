@@ -102,7 +102,7 @@ class Validator
             $rule = $this->createInstance($rule, $this->getInput($data));
 
             if (false === $rule->execute()) {
-                $this->errors[] = sprintf($rule->getError(), $this->getLabel($data), $rule->getRuleName());
+                $this->errors[] = ['label' => $this->getLabel($data), 'error' => $rule->getError()];
             }
         }
     }

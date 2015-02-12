@@ -87,7 +87,6 @@ class PageMapper
      * Save the page.
      *
      * @param \Basalt\Database\Page $page Page.
-     * @throws \Basalt\Exceptions\ValidationException
      * @return void
      */
     public function save(Page &$page)

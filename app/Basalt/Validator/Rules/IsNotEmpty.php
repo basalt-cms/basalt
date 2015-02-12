@@ -1,5 +1,7 @@
 <?php
 
+namespace Basalt\Validator\Rules;
+
 use Basalt\Validator\Base;
 use Basalt\Validator\RuleInterface;
 

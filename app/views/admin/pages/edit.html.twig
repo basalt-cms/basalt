@@ -6,7 +6,7 @@
         <h1>Edit page</h1>
     </div>
     {% for error in getFlash('errors') %}
-        <p class="alert alert-danger">{{ error }}</p>
+        <p class="alert alert-danger"><strong>{{ error.label }}:</strong> {{ error.error }}</p>
     {% endfor %}
     {{ form(['updatePage', {'id': page.id}], {'class': 'form'}) }}
         <div class="col-sm-6 form-group">
