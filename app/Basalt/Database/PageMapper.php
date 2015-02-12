@@ -14,7 +14,7 @@ class PageMapper
     /**
      * Constructor.
      *
-     * @param PDO $pdo PDO.
+     * @param \PDO $pdo PDO.
      */
     public function __construct(PDO $pdo)
     {
@@ -22,15 +22,31 @@ class PageMapper
     }
 
     /**
-     * Return Page by slug.
+     * Return page by slug.
      *
      * @param string $slug Page slug.
      * @return \Basalt\Database\Page|null
      */
-    public function get($slug)
+    public function getBySlug($slug)
     {
         $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `slug` = :slug');
         $statement->bindValue(':slug', $slug);
+
+        $statement->execute();
+
+        return $statement->fetchObject('\Basalt\Database\Page') ?: null;
+    }
+
+    /**
+     * Return page by id.
+     *
+     * @param int $id Page id.
+     * @return \Basalt\Database\Page|null
+     */
+    public function getById($id)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = :id');
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
 
         $statement->execute();
 
@@ -55,7 +71,7 @@ class PageMapper
      * Return all pages.
      *
      * @param bool $drafts Should it return drafts?
-     * @return null
+     * @return \Basalt\Database\Page|null
      */
     public function all($drafts = false)
     {

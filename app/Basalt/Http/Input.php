@@ -26,7 +26,7 @@ class Input implements \ArrayAccess
 
     public function offsetGet($offset)
     {
-        return $this->input[$offset];
+        return isset($this->input[$offset]) ? $this->input[$offset] : null;
     }
 
     public function offsetSet($offset, $value)

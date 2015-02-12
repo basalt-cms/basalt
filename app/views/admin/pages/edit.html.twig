@@ -1,0 +1,42 @@
+{% extends 'admin.html.twig' %}
+
+{% block content %}
+    <div class="page-header">
+        <a href="{{ url('pages') }}" class="btn btn-default pull-right">Back without saving</a>
+        <h1>Edit page</h1>
+    </div>
+    {% for error in getFlash('errors') %}
+        <p class="alert alert-danger">{{ error }}</p>
+    {% endfor %}
+    {{ form(['updatePage', {'id': page.id}], {'class': 'form'}) }}
+        <div class="col-sm-6 form-group">
+            <label for="name">Page name</label>
+            {{ text('name', page.name, {'id': 'name', 'class': 'form-control', 0: 'required'}) }}
+        </div>
+        <div class="col-sm-6 form-group">
+            <label for="slug">Page slug</label>
+            {{ text('slug', page.slug, {'id': 'slug', 'class': 'form-control', 0: 'required'}) }}
+        </div>
+        <div class="col-sm-12 form-group">
+            <label for="content">Content</label>
+            {{ textarea('content', page.content, {'id': 'content', 'rows': 15, 'class': 'form-control'}) }}
+        </div>
+        <p>{{ submit('Update page', {'class': 'btn btn-primary'}) }} or {{ input('submit', 'draft', 'save as draft', {'class': 'btn btn-default'}) }}</p>
+    {{ closeForm() }}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script>
+        CKEDITOR.replace('content');
+        CKEDITOR.config.resize_enabled = false;
+
+        function resize() {
+            document.getElementById('cke_1_contents').style.height = (document.documentElement.offsetHeight - document.getElementsByTagName('main')[0].offsetHeight -
+            document.getElementsByTagName('header')[0].offsetHeight + document.getElementById('cke_1_contents').offsetHeight) + "px";
+        }
+
+        CKEDITOR.on('instanceReady', resize);
+        window.addEventListener('resize', resize);
+    </script>
+{% endblock %}

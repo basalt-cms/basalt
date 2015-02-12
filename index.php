@@ -9,5 +9,5 @@ try {
 
     $app->run();
 } catch (Exception $e) {
-    echo '<pre>'.print_r($e, true).'</pre>';
+    echo sprintf('<h1>%s</h1><h2>%s file %s line</h2><p>%s</p>', get_class($e), $e->getFile(), $e->getLine(), $e->getMessage());
 }

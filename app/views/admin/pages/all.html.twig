@@ -28,7 +28,7 @@
                     <td>/{{ page.slug }}</td>
                     <td>{{ page.name }}</td>
                     <td>
-                        <a href="#">Edit</a>
+                        <a href="{{ url('editPage', {'id': page.id}) }}">Edit</a>
                         {% if page.id != 1 %}
                             {{ form(['deletePage', {'id': page.id}], {'class': 'inline'}) }}
                                 {{ submit('Delete', {'class': 'btn-hyperlink'}) }}

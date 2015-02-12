@@ -8,16 +8,16 @@ use Basalt\Exceptions\ValidationException;
 
 class PageController extends Controller
 {
-    public function page($slug = '')
+    public function page($slug = null)
     {
         $pageMapper = new PageMapper($this->app->container->pdo);
 
         $menu = $pageMapper->all();
 
-        if (empty($slug)) {
+        if (is_null($slug)) {
             $page = $pageMapper->getIndex();
         } else {
-            $page = $pageMapper->get($slug);
+            $page = $pageMapper->getBySlug($slug);
         }
 
         return $this->render('page', compact('menu', 'page'));
@@ -31,25 +31,25 @@ class PageController extends Controller
 
         $message = $this->getFlash('message');
 
-        return $this->render('admin.pages', compact('pages', 'message'));
+        return $this->render('admin.pages.all', compact('pages', 'message'));
     }
 
     public function newPage()
     {
-        return $this->render('admin.page');
+        return $this->render('admin.pages.new');
     }
 
-    public function addPage()
+    public function add()
     {
         $input = $this->app->container->request->input;
+
+        $pageMapper = new PageMapper($this->app->container->pdo);
 
         $page = new Page;
         $page->name = $input['name'];
         $page->slug = $input['slug'];
         $page->content = $input['content'];
         $page->draft = isset($input['draft']);
-
-        $pageMapper = new PageMapper($this->app->container->pdo);
 
         try {
             $pageMapper->save($page);
@@ -65,7 +65,42 @@ class PageController extends Controller
         }
     }
 
-    public function deletePage($id)
+    public function edit($id)
+    {
+        $pageMapper = new PageMapper($this->app->container->pdo);
+
+        $page = $pageMapper->getById($id);
+
+        return $this->render('admin.pages.edit', compact('page'));
+    }
+
+    public function update($id)
+    {
+        $input = $this->app->container->request->input;
+
+        $pageMapper = new PageMapper($this->app->container->pdo);
+
+        $page = $pageMapper->getById($id);
+        $page->name = $input['name'];
+        $page->slug = $input['slug'];
+        $page->content = $input['content'];
+        $page->draft = isset($input['draft']);
+
+        try {
+            $pageMapper->save($page);
+
+            $this->flash('message', 'Page has been updated succesful.');
+
+            return $this->redirect('pages');
+        } catch (ValidationException $e) {
+            $this->flash('errors', $e->getErrors());
+            $this->flash('input', serialize($this->app->container->request->input));
+
+            return $this->redirect(['editPage', ['id' => $id]]);
+        }
+    }
+
+    public function delete($id)
     {
         if (1 !== $id) {
             $pageMapper = new PageMapper($this->app->container->pdo);

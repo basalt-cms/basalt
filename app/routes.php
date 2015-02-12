@@ -23,22 +23,32 @@ $routes->add('pages', new Route(
 
 $routes->add('newPage', new Route(
     '/admin/pages/new', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PageController@newPage'
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@newPage' // Cuz new is a keyword
     ], [], [], '', [], Request::METHOD_GET));
 
 $routes->add('addPage', new Route(
     '/admin/pages', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PageController@addPage'
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@add'
     ], [], [], '', [], Request::METHOD_POST));
+
+$routes->add('editPage', new Route(
+    '/admin/pages/{id}', [
+    '_controller' => 'Basalt\\Http\\Controllers\\PageController@edit'
+    ], [], [], '', [], Request::METHOD_GET));
+
+$routes->add('updatePage', new Route(
+    '/admin/pages/{id}', [
+    '_controller' => 'Basalt\\Http\\Controllers\\PageController@update'
+    ], [], [], '', [], Request::METHOD_PUT));
 
 $routes->add('deletePage', new Route(
     '/admin/{id}', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PageController@deletePage'
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@delete'
     ], [], [], '', [], Request::METHOD_DELETE));
 
 $routes->add('page', new Route(
     '/{slug}', [
-    '_controller' => 'Basalt\\Http\\Controllers\\PageController@page'
-], [], [], '', [], Request::METHOD_GET));
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@page'
+    ], [], [], '', [], Request::METHOD_GET));
 
 return $routes;

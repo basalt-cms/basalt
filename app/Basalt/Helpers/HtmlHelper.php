@@ -107,7 +107,7 @@ class HtmlHelper extends Twig_Extension
      */
     public function input($type, $name = '', $default = '', $parameters = [])
     {
-        $default = (empty($default)) ? $this->flash[$name] : $default;
+        $default = (isset($this->flash[$name])) ? $this->flash[$name] : $default;
         $default = (empty($default)) ? '' : sprintf(' value="%s"', $default);
 
         $parameters = $this->buildParameters($parameters);
