@@ -28,7 +28,7 @@ class App
         $this->loadConfig();
 
         $this->container = new Container($this);
-        $this->container->mainUrl = rtrim(pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME), '').'/';
+        $this->container->mainUrl = rtrim(pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME), '\\').'/';
     }
 
     /**
