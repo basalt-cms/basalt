@@ -103,7 +103,7 @@ class PageMapper
 
             $statement->execute();
         } else {
-            $statement = $this->pdo->prepare('INSERT INTO `pages` (`name`, `slug`, `content`, `draft`) VALUES (:name, :slug, :content, :draft)');
+            $statement = $this->pdo->prepare('INSERT INTO `pages` (`name`, `slug`, `content`, `draft`, `order`) SELECT :name, :slug, :content, :draft, MAX(`id`) + 1 FROM `pages`');
             $statement->bindValue(':name', $page->name);
             $statement->bindValue(':slug', $page->slug);
             $statement->bindValue(':content', $page->content);
