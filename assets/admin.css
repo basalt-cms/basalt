@@ -25,3 +25,4 @@ html { height: 100%; }
 
 .btn-default { background: linear-gradient(#fff, #eee); }
 .btn-primary, .btn-primary:hover { background: linear-gradient(#337ab7, #286090); }
+.table-striped > tbody > tr:nth-child(even) { background: #fff; }

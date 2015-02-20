@@ -76,7 +76,7 @@ class PageMapper
     public function all($drafts = false)
     {
         $drafts = $drafts ? '' : ' WHERE `draft` = 0';
-        $statement = $this->pdo->prepare('SELECT * FROM `pages`'.$drafts);
+        $statement = $this->pdo->prepare('SELECT * FROM `pages`'.$drafts.' ORDER BY `order`');
 
         $statement->execute();
 
@@ -113,6 +113,22 @@ class PageMapper
 
             $page->id = $this->pdo->lastInsertId();
         }
+    }
+
+    public function changeOrder(array $order)
+    {
+        $counter = 0;
+
+        foreach ($order as $id) {
+            $statement = $this->pdo->prepare('UPDATE `pages` SET `order` = :order WHERE `id` = :id');
+            $statement->bindValue(':order', $counter, PDO::PARAM_INT);
+            $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+            $statement->execute();
+
+            $counter++;
+        }
+
     }
 
     /**

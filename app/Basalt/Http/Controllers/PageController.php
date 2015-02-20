@@ -5,6 +5,7 @@ namespace Basalt\Http\Controllers;
 use Basalt\Database\Page;
 use Basalt\Database\PageMapper;
 use Basalt\Exceptions\ValidationException;
+use Basalt\Http\Response;
 
 class PageController extends Controller
 {
@@ -98,6 +99,16 @@ class PageController extends Controller
 
             return $this->redirect(['editPage', ['id' => $id]]);
         }
+    }
+
+    public function changeOrder()
+    {
+        $order = $this->app->container->request->input['item'];
+
+        $pageMapper = new PageMapper($this->app->container->pdo);
+        $pageMapper->changeOrder($order);
+
+        return new Response('');
     }
 
     public function delete($id)

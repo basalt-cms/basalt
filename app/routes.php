@@ -33,13 +33,18 @@ $routes->add('addPage', new Route(
 
 $routes->add('editPage', new Route(
     '/admin/pages/{id}', [
-    '_controller' => 'Basalt\\Http\\Controllers\\PageController@edit'
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@edit'
     ], [], [], '', [], Request::METHOD_GET));
 
 $routes->add('updatePage', new Route(
     '/admin/pages/{id}', [
-    '_controller' => 'Basalt\\Http\\Controllers\\PageController@update'
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@update'
     ], [], [], '', [], Request::METHOD_PUT));
+
+$routes->add('changeOrderPage', new Route(
+    '/admin/pages/order', [
+        '_controller' => 'Basalt\\Http\\Controllers\\PageController@changeOrder'
+    ], [], [], '', [], Request::METHOD_POST));
 
 $routes->add('deletePage', new Route(
     '/admin/{id}', [

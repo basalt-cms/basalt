@@ -3,7 +3,7 @@
 namespace Basalt\Validator;
 
 /*
- * Validator, RuleInterface and Base are written by pomek and modified by Albert221
+ * Validator, RuleInterface and Base are written by @pomek {@url http://github.com/pomek} and modified by @Albert221
  * http://www.forumweb.pl/porady-i-tutoriale-www/php-tworzymy-prosty-walidator-oop,82978
  */
 class Validator
