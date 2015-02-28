@@ -1,0 +1,20 @@
+{% extends 'admin.html.twig' %}
+
+{% set title = ['Settings', 'settings'] %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Settings</h1>
+    </div>
+    {# form('') #}
+        <div class="col-md-6 form-group">
+            <label for="website-name">Website name</label>
+            {{ text('website-name', '', {'id': 'website-name', 'class': 'form-control'}) }}
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="website-name">Website author</label>
+            {{ text('website-author', '', {'id': 'website-author', 'class': 'form-control'}) }}
+        </div>
+        {{ submit('Save settings', {'class': 'btn btn-primary'}) }}
+    {# closeForm() #}
+{% endblock %}

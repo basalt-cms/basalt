@@ -25,7 +25,7 @@ class Response
      * @param int $status Status code
      * @param array $headers Headers array.
      */
-    public function __construct($body, $status = 200, array $headers = [])
+    public function __construct($body = '', $status = 200, array $headers = [])
     {
         $this->body = $body;
         $this->status = $status;

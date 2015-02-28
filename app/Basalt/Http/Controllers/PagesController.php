@@ -7,7 +7,7 @@ use Basalt\Database\PageMapper;
 use Basalt\Exceptions\ValidationException;
 use Basalt\Http\Response;
 
-class PageController extends Controller
+class PagesController extends Controller
 {
     public function page($slug = null)
     {
@@ -32,7 +32,7 @@ class PageController extends Controller
 
         $message = $this->getFlash('message');
 
-        return $this->render('admin.pages.all', compact('pages', 'message'));
+        return $this->render('admin.pages.pages', compact('pages', 'message'));
     }
 
     public function newPage()
@@ -103,12 +103,14 @@ class PageController extends Controller
 
     public function changeOrder()
     {
-        $order = $this->app->container->request->input['item'];
+        if ($this->app->container->request->isAjax()) {
+            $order = $this->app->container->request->input['item'];
 
-        $pageMapper = new PageMapper($this->app->container->pdo);
-        $pageMapper->changeOrder($order);
+            $pageMapper = new PageMapper($this->app->container->pdo);
+            $pageMapper->changeOrder($order);
+        }
 
-        return new Response('');
+        return new Response;
     }
 
     public function delete($id)

@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Basalt Admin Panel</title>
+        <title>{{ title[0] }} &ndash; Basalt</title>
         <link rel="stylesheet" href="{{ asset('bootstrap.css') }}">
         <link rel="stylesheet" href="{{ asset('admin.css') }}">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic&amp;subset=latin-ext">
@@ -18,10 +18,10 @@
         </header>
         <nav class="nav" role="navigation">
             <ul>
-                <li><a href="{{ url('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url('pages') }}" class="active">Pages</a></li>
-                <li><a href="#">Plugins</a></li>
-                <li><a href="#">Settings</a></li>
+                <li><a href="{{ url('dashboard') }}"{{ title[1] == 'dashboard' ? ' class="active"' }}>Dashboard</a></li>
+                <li><a href="{{ url('pages') }}"{{ title[1] == 'pages' ? ' class="active"' }}>Pages</a></li>
+                <li><a href="#"{{ title[1] == 'plugins' ? ' class="active"' }}>Plugins</a></li>
+                <li><a href="{{ url('settings') }}"{{ title[1] == 'settings' ? ' class="active"' }}>Settings</a></li>
             </ul>
         </nav>
         <main class="main" role="main">
