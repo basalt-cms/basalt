@@ -2,9 +2,8 @@
 
 namespace Basalt;
 
-use Basalt\Exceptions\ResponseExpectedException;
+use Basalt\Http\ResponseExpectedException;
 use Basalt\Http\Response;
-use Basalt\Exceptions\ConfigNotFoundException;
 use Basalt\Providers\ServiceProvider;
 
 class App

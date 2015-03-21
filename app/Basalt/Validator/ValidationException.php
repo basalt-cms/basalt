@@ -1,6 +1,6 @@
 <?php
 
-namespace Basalt\Exceptions;
+namespace Basalt\Validator;
 
 class ValidationException extends \Exception
 {

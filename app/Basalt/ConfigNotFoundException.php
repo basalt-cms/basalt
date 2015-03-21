@@ -1,6 +1,6 @@
 <?php
 
-namespace Basalt\Exceptions;
+namespace Basalt;
 
 class ConfigNotFoundException extends \Exception
 {
