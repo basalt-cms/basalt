@@ -8,4 +8,9 @@ class SettingsController extends Controller
     {
         return $this->render('admin.settings.settings');
     }
+
+    public function updateSettings()
+    {
+        //
+    }
 }

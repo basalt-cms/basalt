@@ -61,4 +61,9 @@ $routes->add('settings', new Route(
         '_controller' => 'Basalt\\Http\\Controllers\\SettingsController@settings'
     ], [], [], '', [], Request::METHOD_GET));
 
+$routes->add('updateSettings', new Route(
+    '/admin/settings', [
+        '_controller' => 'Basalt\\Http\\Controllers\\SettingsController@updateSettings'
+    ], [], [], '', [], Request::METHOD_POST));
+
 return $routes;

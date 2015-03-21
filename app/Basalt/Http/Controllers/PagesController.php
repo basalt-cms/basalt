@@ -55,7 +55,7 @@ class PagesController extends Controller
         try {
             $pageMapper->save($page);
 
-            $this->flash('message', 'Page has been added succesful.');
+            $this->flash('message', 'Page has been added successful.');
 
             return $this->redirect('pages');
         } catch (ValidationException $e) {
@@ -90,7 +90,7 @@ class PagesController extends Controller
         try {
             $pageMapper->save($page);
 
-            $this->flash('message', 'Page has been updated succesful.');
+            $this->flash('message', 'Page has been updated successful.');
 
             return $this->redirect('pages');
         } catch (ValidationException $e) {
@@ -103,12 +103,10 @@ class PagesController extends Controller
 
     public function changeOrder()
     {
-        if ($this->app->container->request->isAjax()) {
-            $order = $this->app->container->request->input['item'];
+        $order = $this->app->container->request->input['item'];
 
-            $pageMapper = new PageMapper($this->app->container->pdo);
-            $pageMapper->changeOrder($order);
-        }
+        $pageMapper = new PageMapper($this->app->container->pdo);
+        $pageMapper->changeOrder($order);
 
         return new Response;
     }
@@ -119,7 +117,7 @@ class PagesController extends Controller
             $pageMapper = new PageMapper($this->app->container->pdo);
             $pageMapper->delete($id);
 
-            $this->flash('message', 'Page has been deleted succesful.');
+            $this->flash('message', 'Page has been deleted successful.');
         }
 
         return $this->redirect('pages');

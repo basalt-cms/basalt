@@ -6,7 +6,7 @@
     <div class="page-header">
         <h1>Settings</h1>
     </div>
-    {# form('') #}
+    {{ form('updateSettings', {'class' : 'form'}) }}
         <div class="col-md-6 form-group">
             <label for="website-name">Website name</label>
             {{ text('website-name', '', {'id': 'website-name', 'class': 'form-control'}) }}
@@ -16,5 +16,5 @@
             {{ text('website-author', '', {'id': 'website-author', 'class': 'form-control'}) }}
         </div>
         {{ submit('Save settings', {'class': 'btn btn-primary'}) }}
-    {# closeForm() #}
+    {{ closeForm() }}
 {% endblock %}
