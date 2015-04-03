@@ -9,16 +9,23 @@ use Basalt\Http\Response;
 
 class PagesController extends Controller
 {
+    protected $dataMapper;
+    
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        $this->dataMapper = new PageMapper($this->app->container->pdo);
+    }
+    
     public function page($slug = null)
     {
-        $pageMapper = new PageMapper($this->app->container->pdo);
-
-        $menu = $pageMapper->all();
+        $menu = $this->dataMapper->all();
 
         if (is_null($slug)) {
-            $page = $pageMapper->getIndex();
+            $page = $this->dataMapper->getIndex();
         } else {
-            $page = $pageMapper->getBySlug($slug);
+            $page = $this->dataMapper->getBySlug($slug);
         }
 
         return $this->render('page', compact('menu', 'page'));
@@ -26,9 +33,7 @@ class PagesController extends Controller
 
     public function pages()
     {
-        $pageMapper = new PageMapper($this->app->container->pdo);
-
-        $pages = $pageMapper->all(true);
+        $pages = $this->dataMapper->all(true);
 
         $message = $this->getFlash('message');
 
@@ -44,8 +49,6 @@ class PagesController extends Controller
     {
         $input = $this->app->container->request->input;
 
-        $pageMapper = new PageMapper($this->app->container->pdo);
-
         $page = new Page;
         $page->name = $input['name'];
         $page->slug = $input['slug'];
@@ -53,7 +56,7 @@ class PagesController extends Controller
         $page->draft = isset($input['draft']);
 
         try {
-            $pageMapper->save($page);
+            $this->dataMapper->save($page);
 
             $this->flash('message', 'Page has been added successful.');
 
@@ -68,9 +71,7 @@ class PagesController extends Controller
 
     public function edit($id)
     {
-        $pageMapper = new PageMapper($this->app->container->pdo);
-
-        $page = $pageMapper->getById($id);
+        $page = $this->dataMapper->getById($id);
 
         return $this->render('admin.pages.edit', compact('page'));
     }
@@ -79,16 +80,14 @@ class PagesController extends Controller
     {
         $input = $this->app->container->request->input;
 
-        $pageMapper = new PageMapper($this->app->container->pdo);
-
-        $page = $pageMapper->getById($id);
+        $page = $this->dataMapper->getById($id);
         $page->name = $input['name'];
         $page->slug = $input['slug'];
         $page->content = $input['content'];
         $page->draft = isset($input['draft']);
 
         try {
-            $pageMapper->save($page);
+            $this->dataMapper->save($page);
 
             $this->flash('message', 'Page has been updated successful.');
 
@@ -105,8 +104,7 @@ class PagesController extends Controller
     {
         $order = $this->app->container->request->input['item'];
 
-        $pageMapper = new PageMapper($this->app->container->pdo);
-        $pageMapper->changeOrder($order);
+        $this->dataMapper->changeOrder($order);
 
         return new Response;
     }
@@ -114,8 +112,7 @@ class PagesController extends Controller
     public function delete($id)
     {
         if (1 !== $id) {
-            $pageMapper = new PageMapper($this->app->container->pdo);
-            $pageMapper->delete($id);
+            $this->dataMapper->delete($id);
 
             $this->flash('message', 'Page has been deleted successful.');
         }
