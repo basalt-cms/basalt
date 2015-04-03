@@ -4,6 +4,7 @@ namespace Basalt\Http\Controllers;
 
 use Basalt\Database\Page;
 use Basalt\Database\PageMapper;
+use Basalt\Database\SettingMapper;
 use Basalt\Validator\ValidationException;
 use Basalt\Http\Response;
 
@@ -28,7 +29,11 @@ class PagesController extends Controller
             $page = $this->dataMapper->getBySlug($slug);
         }
 
-        return $this->render('page', compact('menu', 'page'));
+        $settingsMapper = new SettingMapper($this->app->container->pdo);
+        $website_name = $settingsMapper->get('website_name');
+        $website_author = $settingsMapper->get('website_author');
+
+        return $this->render('page', compact('menu', 'page', 'settings', 'website_name', 'website_author'));
     }
 
     public function pages()

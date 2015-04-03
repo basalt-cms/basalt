@@ -2,7 +2,7 @@
 <html lang="pl">
     <head>
         <meta charset="UTF-8">
-        <title>{{ page.name|e }} &ndash; Website</title>
+        <title>{{ page.name|e }} &ndash; {{ website_name }}</title>
         <meta name="description" content="Description.">
         <link rel="stylesheet" href="{{ asset('page.css') }}">
         <!--[if lt IE 9]>
@@ -24,7 +24,7 @@
             {{ page.content }}
         </main>
         <footer class="footer" role="contentinfo">
-            <span class="left">Copyright &copy; John Doe, 2015</span>
+            <span class="left">Copyright &copy; {{ website_author }}, {{ 'now'|date('Y') }}</span>
             <span class="right">Powered by Basalt &bull; <a href="{{ url('dashboard') }}">AP</a></span>
         </footer>
     </body>
