@@ -43,7 +43,7 @@ class SettingMapper
 
             $statement->execute();
 
-            $$setting->id = $this->pdo->lastInsertId();
+            $setting->id = $this->pdo->lastInsertId();
         }
     }
 } 
