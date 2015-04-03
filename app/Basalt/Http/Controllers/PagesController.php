@@ -42,7 +42,9 @@ class PagesController extends Controller
 
     public function newPage()
     {
-        return $this->render('admin.pages.new');
+        $errors = $this->getFlash('errors');
+
+        return $this->render('admin.pages.new', compact('errors'));
     }
 
     public function add()
@@ -73,7 +75,9 @@ class PagesController extends Controller
     {
         $page = $this->dataMapper->getById($id);
 
-        return $this->render('admin.pages.edit', compact('page'));
+        $errors = $this->getFlash('errors');
+
+        return $this->render('admin.pages.edit', compact('page', 'errors'));
     }
 
     public function update($id)

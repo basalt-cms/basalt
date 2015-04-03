@@ -7,7 +7,7 @@
         <a href="{{ url('pages') }}" class="btn btn-default pull-right">Back without saving</a>
         <h1>New page</h1>
     </div>
-    {% for error in getFlash('errors') %}
+    {% for error in errors %}
         <p class="alert alert-danger"><strong>{{ error.label }}:</strong> {{ error.error }}</p>
     {% endfor %}
     {{ form('addPage', {'class': 'form'}) }}

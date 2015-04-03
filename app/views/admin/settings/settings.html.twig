@@ -6,15 +6,16 @@
     <div class="page-header">
         <h1>Settings</h1>
     </div>
+    {% if message is not empty %}
+        <p class="alert alert-success">{{ message }}</p>
+    {% endif %}
     {{ form('updateSettings', {'class' : 'form'}) }}
-        <div class="col-md-6 form-group">
-            <label for="website-name">Website name</label>
-            {{ text('website-name', '', {'id': 'website-name', 'class': 'form-control'}) }}
-        </div>
-        <div class="col-md-6 form-group">
-            <label for="website-name">Website author</label>
-            {{ text('website-author', '', {'id': 'website-author', 'class': 'form-control'}) }}
-        </div>
+        {% for setting in settings %}
+            <div class="col-md-6 form-group">
+                <label for="{{ setting.name }}">{{ setting.name }}</label>
+                {{ text('settings[%s]'|format(setting.name), setting.value, {'id': setting.name, 'class': 'form-control'}) }}
+            </div>
+        {% endfor %}
         {{ submit('Save settings', {'class': 'btn btn-primary'}) }}
     {{ closeForm() }}
 {% endblock %}

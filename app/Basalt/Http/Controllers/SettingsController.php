@@ -17,11 +17,26 @@ class SettingsController extends Controller
 
     public function settings()
     {
-        return $this->render('admin.settings.settings');
+        $settings = $this->dataMapper->all();
+
+        $message = $this->getFlash('message');
+
+        return $this->render('admin.settings.settings', compact('settings', 'message'));
     }
 
-    public function updateSettings()
+    public function update()
     {
-        //
+        $input = $this->app->container->request->input;
+
+        foreach($input['settings'] as $name => $value) {
+            $setting = $this->dataMapper->get($name);
+            $setting->value = $value;
+
+            $this->dataMapper->save($setting);
+        }
+
+        $this->flash('message', 'Settings have been updated successful.');
+
+        return $this->redirect('settings');
     }
 }

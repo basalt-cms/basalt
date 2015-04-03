@@ -36,8 +36,6 @@ class SettingMapper
 
     public function save(Setting &$setting)
     {
-        $setting->validate();
-
         if ($setting->id) {
             $statement = $this->pdo->prepare('UPDATE `settings` SET `name` = :name, `value` = :value WHERE `id` = :id');
             $statement->bindValue(':id', $setting->id, PDO::PARAM_INT);
