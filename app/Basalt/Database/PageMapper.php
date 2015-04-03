@@ -6,6 +6,8 @@ use PDO;
 
 class PageMapper
 {
+    const ENTITY = '\Basalt\Database\Page';
+
     /**
      * @var \PDO PDO.
      */
@@ -34,7 +36,7 @@ class PageMapper
 
         $statement->execute();
 
-        return $statement->fetchObject('\Basalt\Database\Page') ?: null;
+        return $statement->fetchObject(self::ENTITY) ?: null;
     }
 
     /**
@@ -50,7 +52,7 @@ class PageMapper
 
         $statement->execute();
 
-        return $statement->fetchObject('\Basalt\Database\Page') ?: null;
+        return $statement->fetchObject(self::ENTITY) ?: null;
     }
 
     /**
@@ -64,7 +66,7 @@ class PageMapper
 
         $statement->execute();
 
-        return $statement->fetchObject('\Basalt\Database\Page') ?: null;
+        return $statement->fetchObject(self::ENTITY) ?: null;
     }
 
     /**
@@ -80,7 +82,7 @@ class PageMapper
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_CLASS, '\Basalt\Database\Page') ?: null;
+        return $statement->fetchAll(PDO::FETCH_CLASS, self::ENTITY) ?: null;
     }
 
     /**

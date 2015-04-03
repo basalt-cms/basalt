@@ -4,11 +4,7 @@ namespace Basalt\Database;
 
 class Setting
 {
-    public $id, $name, $value, $type;
-
-    const TYPE_VARCHAR = 0;
-    const TYPE_BOOLEAN = 1;
-    const TYPE_TEXT = 2;
+    public $id, $name, $value;
 
     public function validate()
     {
