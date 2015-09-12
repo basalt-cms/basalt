@@ -51,9 +51,9 @@ $routes->add('deletePage', new Route(
         '_controller' => 'Basalt\\Http\\Controllers\\PagesController@delete'
     ], [], [], '', [], Request::METHOD_DELETE));
 
-$routes->add('page', new Route(
-    '/{slug}', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PagesController@page'
+$routes->add('plugins', new Route(
+    '/admin/plugins', [
+        '_controller' => 'Basalt\\Http\\Controllers\\PluginsController@plugins'
     ], [], [], '', [], Request::METHOD_GET));
 
 $routes->add('settings', new Route(
@@ -65,5 +65,10 @@ $routes->add('updateSettings', new Route(
     '/admin/settings', [
         '_controller' => 'Basalt\\Http\\Controllers\\SettingsController@update'
     ], [], [], '', [], Request::METHOD_POST));
+
+$routes->add('page', new Route(
+    '/{slug}', [
+    '_controller' => 'Basalt\\Http\\Controllers\\PagesController@page'
+], [], [], '', [], Request::METHOD_GET));
 
 return $routes;
