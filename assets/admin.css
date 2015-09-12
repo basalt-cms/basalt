@@ -13,7 +13,7 @@ html { height: 100%; }
 .nav a { display: block; padding: 0 15px; color: #fff; text-decoration: none; line-height: 40px; }
 .nav a:hover { background: #777; }
 .nav a.active { position: relative; background: #446cb3; }
-.nav a.active::after { content: ""; position: absolute; top: 0; bottom: 0; right: -5px; width: 10px; height: 10px; margin: auto 0; background: #fff; transform: rotate(45deg); }
+.nav a.active::after { content: ""; position: absolute; top: 0; bottom: 0; right: -5px; width: 10px; height: 10px; margin: auto 0; background: #fff; -webkit-transform: rotate(45deg); transform: rotate(45deg); }
 
 .main { margin-left: 200px; padding: 15px 30px; }
 
