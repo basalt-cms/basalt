@@ -76,9 +76,9 @@ class Controller
      * @param mixed $value Value to flash.
      * @return void
      */
-    protected function flash($name, $value)
+    protected function setFlash($name, $value)
     {
-        $this->app->container->flash->flash($name, $value);
+        $this->app->container->flash->set($name, $value);
     }
 
     /**

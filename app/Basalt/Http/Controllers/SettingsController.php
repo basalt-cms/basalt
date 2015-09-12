@@ -35,7 +35,7 @@ class SettingsController extends Controller
             $this->dataMapper->save($setting);
         }
 
-        $this->flash('message', 'Settings have been updated successful.');
+        $this->setFlash('message', 'Settings have been updated successful.');
 
         return $this->redirect('settings');
     }

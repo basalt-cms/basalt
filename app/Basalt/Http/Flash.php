@@ -4,28 +4,53 @@ namespace Basalt\Http;
 
 class Flash
 {
-    const MESSAGE_PREFIX = 'flash_';
+    private static $messagePrefix = 'basalt_flash';
+
+    /**
+     * Check whether flash message is set.
+     *
+     * @param string $name Flash message name.
+     * @return bool
+     */
+    public function has($name)
+    {
+        return isset($_SESSION[self::$messagePrefix][$name]);
+    }
+
+    /**
+     * Return flashed message and delete it.
+     *
+     * @param string $name Flash message name.
+     * @return mixed
+     */
+    public function get($name)
+    {
+        if (!$this->has($name)) {
+            return null;
+        }
+
+        $value = $_SESSION[self::$messagePrefix][$name];
+
+        unset($_SESSION[self::$messagePrefix][$name]);
+
+        return $value;
+    }
 
     /**
      * Return flashed message.
      *
      * @param string $name Flash message name.
-     * @param bool $delete Should it be deleted?
      * @return mixed
      */
-    public function get($name, $delete = true)
+    public function peek($name)
     {
-        if (isset($_SESSION[$name = self::MESSAGE_PREFIX . $name])) {
-            $value = $_SESSION[$name];
-
-            if ($delete) {
-                unset($_SESSION[$name]);
-            }
-
-            return $value;
+        if (!$this->has($name)) {
+            return null;
         }
 
-        return null;
+        $value = $_SESSION[self::$messagePrefix][$name];
+
+        return $value;
     }
 
     /**
@@ -35,8 +60,8 @@ class Flash
      * @param mixed $value Value to flash.
      * @return void
      */
-    public function flash($name, $value)
+    public function set($name, $value)
     {
-        $_SESSION[self::MESSAGE_PREFIX . $name] = $value;
+        $_SESSION[self::$messagePrefix][$name] = $value;
     }
 }

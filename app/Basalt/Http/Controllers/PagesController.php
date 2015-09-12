@@ -65,12 +65,12 @@ class PagesController extends Controller
         try {
             $this->dataMapper->save($page);
 
-            $this->flash('message', 'Page has been added successful.');
+            $this->setFlash('message', 'Page has been added successful.');
 
             return $this->redirect('pages');
         } catch (ValidationException $e) {
-            $this->flash('errors', $e->getErrors());
-            $this->flash('input', serialize($this->app->container->request->input));
+            $this->setFlash('errors', $e->getErrors());
+            $this->setFlash('input', serialize($this->app->container->request->input));
 
             return $this->redirect('newPage');
         }
@@ -98,12 +98,12 @@ class PagesController extends Controller
         try {
             $this->dataMapper->save($page);
 
-            $this->flash('message', 'Page has been updated successful.');
+            $this->setFlash('message', 'Page has been updated successful.');
 
             return $this->redirect('pages');
         } catch (ValidationException $e) {
-            $this->flash('errors', $e->getErrors());
-            $this->flash('input', serialize($this->app->container->request->input));
+            $this->setFlash('errors', $e->getErrors());
+            $this->setFlash('input', serialize($this->app->container->request->input));
 
             return $this->redirect(['editPage', ['id' => $id]]);
         }
@@ -123,7 +123,7 @@ class PagesController extends Controller
         if (1 !== $id) {
             $this->dataMapper->delete($id);
 
-            $this->flash('message', 'Page has been deleted successful.');
+            $this->setFlash('message', 'Page has been deleted successful.');
         }
 
         return $this->redirect('pages');
