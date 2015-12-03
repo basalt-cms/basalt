@@ -1,28 +1,265 @@
-html { height: 100%; }
+html {
+    height: 100%;
+}
 
-.header { height: 50px; background: #4d4d4d; color: #fff; line-height: 50px; }
-.header h1 { float: left; margin: 0; width: 200px; font-weight: bold; text-align: center; line-height: 50px; }
-.header ul { float: right; list-style: none; margin: 0 15px; }
-.header li { float: left; }
-.header a { display: block; padding: 0 15px; color: #fff; text-decoration: none; }
-.header a:hover { background: #777; }
-.header a img { float: left; display: inline; padding: 5px 5px 5px 0; }
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    line-height: 60px;
+    background: #34495e;
+    z-index: 100;
+}
 
-.nav { position: absolute; width: 200px; height: calc(100% - 50px); background: #616161; }
-.nav ul { list-style: none; margin: 0; margin-top: 15px; padding: 0; }
-.nav a { display: block; padding: 0 15px; color: #fff; text-decoration: none; line-height: 40px; }
-.nav a:hover { background: #777; }
-.nav a.active { position: relative; background: #446cb3; }
-.nav a.active::after { content: ""; position: absolute; top: 0; bottom: 0; right: -5px; width: 10px; height: 10px; margin: auto 0; background: #fff; -webkit-transform: rotate(45deg); transform: rotate(45deg); }
+.header h1 {
+    float: left;
+    width: 200px;
+    margin: 0;
+    font-size: 26px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+}
 
-.main { margin-left: 200px; padding: 15px 30px; }
+.header a {
+    text-decoration: none;
+}
 
-.page-header { margin-top: 0; }
+.header a:hover {
+    background: #425d78;
+}
 
-.inline { display: inline; }
-.btn-hyperlink { display: inline; border: none; padding: 0 !important; background: none !important; color: #337ab7; cursor: pointer; } /* http://stackoverflow.com/questions/1367409/how-to-make-button-look-like-a-link */
-.btn-hyperlink:hover { color: #23527c; text-decoration: underline; }
+.header .updates {
+    position: relative;
+    float: left;
+    padding: 0 15px;
+    color: #fff;
+}
 
-.btn-default { background: linear-gradient(#fff, #eee); }
-.btn-primary, .btn-primary:hover { background: linear-gradient(#337ab7, #286090); }
-.table-striped > tbody > tr:nth-child(even) { background: #fff; }
+.header .updates .digit {
+    position: absolute;
+    top: 15px;
+    left: 24px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #e74c3c;
+    line-height: 14px;
+    font-size: 10px;
+    text-align: center;
+}
+
+.header .updates .message {
+    position: relative;
+    margin-left: 10px;
+    padding: 10px;
+    background: #fff;
+    color: #333;
+    border-radius: 4px;
+}
+
+.header .updates .message:after {
+    position: absolute;
+    left: -5px;
+    top: 0;
+    bottom: 0;
+    content: "";
+    width: 10px;
+    height: 10px;
+    margin: auto;
+    background: #fff;
+    transform: rotate(45deg);
+}
+
+.header ul {
+    float: right;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.header ul li {
+    float: left;
+}
+
+.header ul a {
+    display: block;
+    padding: 0 15px;
+    color: #fff;
+}
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    width: 200px;
+    padding-top: 10px;
+    background: #e5e5e5;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar ul a {
+    display: block;
+    padding-left: 20px;
+    line-height: 45px;
+    color: #333;
+    text-decoration: none;
+}
+
+.sidebar ul a:hover {
+    background: #ccc;
+}
+
+.sidebar ul a.active {
+    position: relative;
+    background: #425d78;
+    color: #fff;
+}
+
+.sidebar ul a.active:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -10px;
+    content: "";
+    width: 15px;
+    height: 15px;
+    margin: auto;
+    background: #fff;
+    transform: rotate(45deg);
+}
+
+.main {
+    margin-top: 60px;
+    margin-left: 200px;
+    padding: 30px;
+}
+
+.main :last-child {
+    margin-bottom: 0;
+}
+
+.btn-default {
+    background: #fff linear-gradient(#fff, #eee);
+}
+
+.btn-default:active, .btn-default.active {
+    background: #fff;
+}
+
+.btn-primary {
+    background: #425d78 linear-gradient(#425d78, #34495e);
+}
+
+.btn-primary:active, .btn-primary.active {
+    background: #425d78;
+}
+
+.alert {
+    border: 0;
+    color: #fff;
+}
+
+.alert .close {
+    margin-left: 10px;
+}
+
+.alert-success {
+    background: #27ae60;
+}
+
+.alert-info {
+    background: #3498db;
+}
+
+.alert-warning {
+    background: #f39c12;
+}
+
+.alert-danger {
+    background: #e74c3c;
+}
+
+.notification {
+    position: fixed;
+    left: 230px;
+    bottom: 30px;
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 12px 15px;
+}
+
+.table > tbody > tr > td {
+    border-top: 0;
+    padding: 10px;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background: #eee;
+}
+
+.table > tbody > tr.placeholder {
+    background: repeating-linear-gradient(45deg, #fff, #fff 10px, #eee 10px, #eee 20px);
+}
+
+.ui-sortable-helper:nth-of-type(even) {
+    background: #fff;
+}
+
+.drag {
+    margin-right: 10px;
+    cursor: n-resize;
+}
+
+.inline {
+    display: inline;
+}
+
+.btn-hyperlink { /* http://stackoverflow.com/questions/1367409/how-to-make-button-look-like-a-link */
+    display: inline;
+    border: none;
+    padding: 0 !important;
+    background: none !important;
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.btn-hyperlink:hover {
+    color: #23527c;
+    text-decoration: underline;
+}
+
+.page-header {
+    margin-top: 0;
+    padding-bottom: 10px;
+}
+
+.page-header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.page-header h2 {
+    float: left;
+    margin: 0;
+    font-size: 36px;
+}
+
+.page-header .btn-group, .page-header a {
+    float: right;
+}
+
+.page-header a {
+    margin-top: 4px;
+}

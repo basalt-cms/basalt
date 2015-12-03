@@ -5,18 +5,22 @@
         <title>{{ title[0] }} &ndash; Basalt</title>
         <link rel="stylesheet" href="{{ asset('bootstrap.css') }}">
         <link rel="stylesheet" href="{{ asset('admin.css') }}">
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic&amp;subset=latin-ext">
-        <style>textarea{resize:vertical}</style>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     </head>
     <body>
         <header class="header" role="banner">
             <h1>Basalt</h1>
+            <a href="{{ url('updates') }}" class="updates">
+                <i class="fa fa-bell fa-lg"></i>
+                <span class="digit">2</span>
+                <span class="message">Updates are available.</span>
+            </a>
             <ul>
                 <li><a href="{{ url('index') }}">Back to site</a></li>
-                <li><a href="#"><img src="http://gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=40" alt="Gravatar"> Log out</a></li>
+                <li><a href="#">Log out</a></li>
             </ul>
         </header>
-        <nav class="nav" role="navigation">
+        <nav class="sidebar" role="navigation">
             <ul>
                 <li><a href="{{ url('dashboard') }}"{{ title[1] == 'dashboard' ? ' class="active"' }}>Dashboard</a></li>
                 <li><a href="{{ url('pages') }}"{{ title[1] == 'pages' ? ' class="active"' }}>Pages</a></li>
@@ -24,7 +28,7 @@
                 <li><a href="{{ url('settings') }}"{{ title[1] == 'settings' ? ' class="active"' }}>Settings</a></li>
             </ul>
         </nav>
-        <main class="main" role="main">
+        <main class="main clearfix" role="main">
             {% block content %}{% endblock %}
         </main>
         <script src="{{ asset('jquery.js') }}"></script>

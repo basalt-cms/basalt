@@ -4,31 +4,28 @@
 
 {% block content %}
     <div class="page-header">
-        <a href="{{ url('newPage') }}" class="btn btn-default pull-right">Add new page</a>
-        <h1>Pages</h1>
+        <h2>Pages</h2>
+        <a href="{{ url('newPage') }}" class="btn btn-primary">Create new page</a>
     </div>
-    {% if message is not empty %}
-        <p class="alert alert-success">{{ message }}</p>
-    {% endif %}
     <p><b>Note:</b> Rows marked with blue are drafts. You can change order of pages by drag 'n drop.</p>
     <table id="table" class="table table-striped">
         <colgroup>
-            <col class="col-xs-2">
             <col class="col-xs-7">
+            <col class="col-xs-2">
             <col class="col-xs-3">
         </colgroup>
         <thead>
             <tr>
-                <th>Page slug</th>
-                <th>Page name</th>
-                <th>Actions</th>
+                <th>Page title</th>
+                <th>Slug</th>
+                <th>Controls</th>
             </tr>
         </thead>
         <tbody>
             {% for page in pages %}
                 <tr{{ page.draft ? ' class="info"' : '' }} id="item-{{ page.id }}">
+                    <td><img src="{{ asset('dragicon.svg') }}" class="drag" alt="Drag 'n drop">{{ page.name }}</td>
                     <td>/{{ page.slug }}</td>
-                    <td>{{ page.name }}</td>
                     <td>
                         <a href="{{ url('editPage', {'id': page.id}) }}">Edit</a>
                         {% if page.id != 1 %}
@@ -40,20 +37,26 @@
                         {% endif %}
                     </td>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">There are no pages</td>
-                </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% if message is not empty %}
+        <div class="alert alert-success alert-dissmissible notification" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}
     <script src="{{ asset('jquery-ui.js') }}"></script>
     <script>
         jQuery('#table > tbody').sortable({
-            'cursor': 'move',
+            handle: '.drag',
+            placeholder: 'placeholder',
+            axis: 'y',
+            containment: 'parent',
+
             'update': function() {
                 var data = jQuery(this).sortable('serialize');
 

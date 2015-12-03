@@ -4,18 +4,25 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>Settings</h1>
+        <h2>Settings</h2>
     </div>
-    {% if message is not empty %}
-        <p class="alert alert-success">{{ message }}</p>
-    {% endif %}
     {{ form('updateSettings', {'class' : 'form'}) }}
-        {% for setting in settings %}
-            <div class="col-md-6 form-group">
-                <label for="{{ setting.name }}">{{ setting.name }}</label>
-                {{ text('settings[%s]'|format(setting.name), setting.value, {'id': setting.name, 'class': 'form-control'}) }}
+        {% for row in settings|batch(2) %}
+            <div class="row">
+                {% for setting in row %}
+                    <div class="col-md-6 form-group">
+                        <label for="{{ setting.name }}">{{ setting.name }}</label>
+                        {{ text('settings[%s]'|format(setting.name), setting.value, {'id': setting.name, 'class': 'form-control'}) }}
+                    </div>
+                {% endfor %}
             </div>
         {% endfor %}
         {{ submit('Save settings', {'class': 'btn btn-primary'}) }}
     {{ closeForm() }}
+    {% if message is not empty %}
+        <div class="alert alert-success alert-dissmissible notification" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }}
+        </div>
+    {% endif %}
 {% endblock %}

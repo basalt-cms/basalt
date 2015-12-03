@@ -66,6 +66,11 @@ $routes->add('updateSettings', new Route(
         '_controller' => 'Basalt\\Http\\Controllers\\SettingsController@update'
     ], [], [], '', [], Request::METHOD_POST));
 
+$routes->add('updates', new Route(
+    '/admin/updates', [
+        '_controller' => 'Basalt\\Http\\Controllers\\UpdatesController@updates'
+    ], [], [], '', [], Request::METHOD_GET));
+
 $routes->add('page', new Route(
     '/{slug}', [
     '_controller' => 'Basalt\\Http\\Controllers\\PagesController@page'
