@@ -1,6 +1,7 @@
 {
     "name": "basalt/basalt",
     "description": "Basalt is simple CMS.",
+    "license": "GPL-3.0",
     "autoload": {
         "psr-4": {
             "Basalt\\": "app/Basalt/"
