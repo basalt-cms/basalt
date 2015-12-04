@@ -2,23 +2,23 @@
 
 namespace Basalt\Providers;
 
-use Basalt\App;
+use Basalt\Container;
 
 abstract class ServiceProvider
 {
     /**
      * @var \Basalt\App Application.
      */
-    protected $app;
+    protected $container;
 
     /**
      * Constructor.
      *
-     * @param \Basalt\App $app Application.
+     * @param Container $container
      */
-    public function __construct(App $app)
+    public function __construct(Container $container)
     {
-        $this->app = $app;
+        $this->container = $container;
     }
 
     /**

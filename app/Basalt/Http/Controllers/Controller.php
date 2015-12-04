@@ -27,7 +27,7 @@ class Controller
     public function __construct(App $app)
     {
         $this->app = $app;
-        $this->view = new View($app);
+        $this->view = new View($app->container->twig);
     }
 
     /**
@@ -61,7 +61,7 @@ class Controller
                 $parameters = [];
             }
 
-            $url = $this->app->container->mainUrl.'index.php/'.$this->app->container->generator->generate($name, $parameters, UrlGenerator::RELATIVE_PATH); // TODO: Embrace this brothel
+            $url = $this->app->container->urlHelper->toRoute($name, $parameters);
 
             return new RedirectResponse($url);
         }

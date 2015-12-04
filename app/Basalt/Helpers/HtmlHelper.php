@@ -3,6 +3,7 @@
 namespace Basalt\Helpers;
 
 use Basalt\App;
+use Basalt\Http\Flash;
 use Basalt\Http\Request;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Twig_Extension;
@@ -13,7 +14,7 @@ class HtmlHelper extends Twig_Extension
     /**
      * @var \Basalt\App Application.
      */
-    protected $app;
+    protected $urlHelper;
 
     /**
      * @var \Basalt\Http\Input Flashed input.
@@ -23,12 +24,13 @@ class HtmlHelper extends Twig_Extension
     /**
      * Constructor.
      *
-     * @param \Basalt\App $app Application.
+     * @param Flash $flash
+     * @param UrlHelper $urlHelper
      */
-    public function __construct(App $app)
+    public function __construct(Flash $flash, UrlHelper $urlHelper)
     {
-        $this->app = $app;
-        $this->flash = unserialize($this->app->container->flash->get('input'));
+        $this->urlHelper = $urlHelper;
+        $this->flash = unserialize($flash->get('input'));
     }
 
     /**
@@ -72,9 +74,8 @@ class HtmlHelper extends Twig_Extension
             $routeParameters = [];
         }
 
-        $route = $this->app->container->routes->get($routeName);
-        $method = $route->getMethods()[0];
-        $url = $this->app->container->mainUrl.'index.php/'.$this->app->container->generator->generate($routeName, $routeParameters, UrlGenerator::RELATIVE_PATH); // TODO: Embrace this brothel
+        $url = $this->urlHelper->toRoute($routeName, $routeParameters);
+        $method = $this->urlHelper->getMethod($routeName);
         $parameters = $this->buildParameters($parameters);
 
         $html = sprintf('<form action="%s" method="POST"%s>', $url, $parameters);

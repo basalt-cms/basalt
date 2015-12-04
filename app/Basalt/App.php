@@ -27,7 +27,6 @@ class App
         $this->loadConfig();
 
         $this->container = new Container($this);
-        $this->container->mainUrl = rtrim(pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME), '\\').'/';
     }
 
     /**
@@ -70,7 +69,7 @@ class App
         $providers = $this->config['providers'];
 
         foreach ($providers as $provider) {
-            $provider = new $provider($this);
+            $provider = new $provider($this->container);
 
             if (!($provider instanceof ServiceProvider)) {
                 continue;

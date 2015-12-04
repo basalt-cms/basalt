@@ -2,18 +2,20 @@
 
 namespace Basalt;
 
+use Twig_Environment;
+
 class View
 {
-    protected $app;
+    protected $twig;
 
     /**
      * Constructor.
      *
-     * @param \Basalt\App $app Application.
+     * @param Twig_Environment $twig
      */
-    public function __construct(App $app)
+    public function __construct(Twig_Environment $twig)
     {
-        $this->app = $app;
+        $this->twig = $twig;
     }
 
     /**
@@ -27,6 +29,6 @@ class View
     {
         $name = str_replace('.', '/', $name);
 
-        return $this->app->container->twig->render($name.'.html.twig', $data);
+        return $this->twig->render($name.'.html.twig', $data);
     }
 }

@@ -12,7 +12,7 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     public function provide()
     {
-        $this->app->container->pdo = function(Container $container) {
+        $this->container->pdo = function(Container $container) {
             $config = $container->app->config['database'];
 
             $dsn = sprintf('mysql:host=%s;dbname=%s', $config['host'], $config['dbname']);
