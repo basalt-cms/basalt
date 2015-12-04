@@ -22,4 +22,4 @@ class Page
             throw new ValidationException($errors);
         }
     }
-} 
+}

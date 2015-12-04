@@ -27,4 +27,4 @@ abstract class ServiceProvider
      * @return void
      */
     abstract public function provide();
-} 
+}

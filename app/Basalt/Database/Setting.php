@@ -10,4 +10,4 @@ class Setting
     {
         return $this->value;
     }
-} 
+}

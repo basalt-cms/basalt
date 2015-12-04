@@ -29,4 +29,4 @@ class View
 
         return $this->app->container->twig->render($name.'.html.twig', $data);
     }
-} 
+}
