@@ -1,4 +1,6 @@
 {
+    "name": "basalt/basalt",
+    "description": "Basalt is simple CMS.",
     "autoload": {
         "psr-4": {
             "Basalt\\": "app/Basalt/"
