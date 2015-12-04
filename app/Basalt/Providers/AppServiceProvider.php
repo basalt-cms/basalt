@@ -2,6 +2,7 @@
 
 namespace Basalt\Providers;
 
+use Basalt\Container;
 use Basalt\Http\Flash;
 use Basalt\Http\Request;
 use Symfony\Component\Routing\Generator\UrlGenerator;
@@ -26,11 +27,11 @@ class AppServiceProvider extends ServiceProvider
             return $context;
         };
 
-        $this->app->container->matcher = function($container) {
+        $this->app->container->matcher = function(Container $container) {
             return new UrlMatcher($container->routes, $container->context);
         };
 
-        $this->app->container->generator = function($container) {
+        $this->app->container->generator = function(Container $container) {
             return new UrlGenerator($container->routes, $container->context);
         };
 

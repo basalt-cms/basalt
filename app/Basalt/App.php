@@ -87,7 +87,7 @@ class App
      */
     protected function prepareResponse()
     {
-        $this->container->response = function($container) {
+        $this->container->response = function(Container $container) {
             $route = $container->matcher->match(isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
             list($controller, $action) = explode('@', $route['_controller']);
 
