@@ -77,8 +77,11 @@ class PageMapper
      */
     public function all($drafts = false)
     {
-        $drafts = $drafts ? '' : ' WHERE `draft` = 0';
-        $statement = $this->pdo->prepare('SELECT * FROM `pages`'.$drafts.' ORDER BY `order`');
+        if ($drafts) {
+            $statement = $this->pdo->prepare('SELECT * FROM `pages` ORDER BY `order`');
+        } else {
+            $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `draft` = 0 ORDER BY `order`');
+        }
 
         $statement->execute();
 
