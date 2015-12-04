@@ -2,10 +2,8 @@
 
 namespace Basalt\Helpers;
 
-use Basalt\App;
 use Basalt\Http\Flash;
 use Basalt\Http\Request;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Twig_Extension;
 use Twig_SimpleFunction;
 

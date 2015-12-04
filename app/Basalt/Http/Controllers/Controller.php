@@ -6,7 +6,6 @@ use Basalt\App;
 use Basalt\Http\RedirectResponse;
 use Basalt\Http\Response;
 use Basalt\View;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class Controller
 {

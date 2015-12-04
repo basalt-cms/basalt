@@ -2,7 +2,6 @@
 
 namespace Basalt\Providers;
 
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Basalt\Helpers\HtmlHelper;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
