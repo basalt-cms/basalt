@@ -18,7 +18,7 @@ class UrlHelper
 
     public function mainUrl()
     {
-        return rtrim(pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME), '\\').'/';
+        return rtrim(pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME), '/').'/';
     }
 
     public function toRoute($name, $parameters = [])
