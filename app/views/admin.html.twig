@@ -22,10 +22,10 @@
         </header>
         <nav class="sidebar" role="navigation">
             <ul>
-                <li><a href="{{ url('dashboard') }}"{{ title[1] == 'dashboard' ? ' class="active"' }}>Dashboard</a></li>
-                <li><a href="{{ url('pages') }}"{{ title[1] == 'pages' ? ' class="active"' }}>Pages</a></li>
-                <li><a href="{{ url('plugins') }}"{{ title[1] == 'plugins' ? ' class="active"' }}>Plugins</a></li>
-                <li><a href="{{ url('settings') }}"{{ title[1] == 'settings' ? ' class="active"' }}>Settings</a></li>
+                <li><a href="{{ url('dashboard') }}"{{ title[1] == 'dashboard' ? ' class="active"' }}><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li><a href="{{ url('pages') }}"{{ title[1] == 'pages' ? ' class="active"' }}><i class="fa fa-align-left"></i>Pages</a></li>
+                <li><a href="{{ url('plugins') }}"{{ title[1] == 'plugins' ? ' class="active"' }}><i class="fa fa-puzzle-piece"></i>Plugins</a></li>
+                <li><a href="{{ url('settings') }}"{{ title[1] == 'settings' ? ' class="active"' }}><i class="fa fa-toggle-on"></i>Settings</a></li>
             </ul>
         </nav>
         <main class="main clearfix" role="main">

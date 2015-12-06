@@ -139,6 +139,13 @@ html {
     transform: rotate(45deg);
 }
 
+.sidebar ul a .fa {
+    display: inline-block;
+    width: 25px;
+    margin-right: 5px;
+    font-size: 18px;
+}
+
 .main {
     margin-top: 60px;
     margin-left: 200px;
