@@ -1,0 +1,42 @@
+<?php
+
+namespace Basalt\Database;
+
+class UserMapper extends AbstractMapper
+{
+    const ENTITY = '\Basalt\Database\User';
+
+    public function getByEmail($email)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM `users` WHERE `email` = :email LIMIT 1');
+        $statement->bindValue('email', $email);
+
+        return $statement->fetchObject(self::ENTITY) ?: null;
+    }
+
+    /**
+     * Save the user.
+     *
+     * @param \Basalt\Database\User $user Page.
+     * @return void
+     */
+    public function save(User &$user)
+    {
+        if ($user->id) {
+            $statement = $this->pdo->prepare('UPDATE `users` SET `email` = :email, `password` = :password WHERE `id` = :id');
+            $statement->bindValue(':id', $user->id, PDO::PARAM_INT);
+            $statement->bindValue(':email', $user->email);
+            $statement->bindValue(':password', $user->password);
+
+            $statement->execute();
+        } else {
+            $statement = $this->pdo->prepare('INSERT INTO `pages` (`email`, `password`) VALUES (:email, :password)');
+            $statement->bindValue(':email', $user->email);
+            $statement->bindValue(':password', $user->password);
+
+            $statement->execute();
+
+            $user->id = $this->pdo->lastInsertId();
+        }
+    }
+}
