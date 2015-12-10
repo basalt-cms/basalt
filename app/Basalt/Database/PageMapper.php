@@ -32,7 +32,7 @@ class PageMapper extends AbstractMapper
      */
     public function getById($id)
     {
-        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = :id');
+        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = :id LIMIT 1');
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
 
         $statement->execute();
@@ -47,7 +47,7 @@ class PageMapper extends AbstractMapper
      */
     public function getIndex()
     {
-        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = 1');
+        $statement = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = 1 LIMIT 1');
 
         $statement->execute();
 
@@ -81,8 +81,6 @@ class PageMapper extends AbstractMapper
      */
     public function save(Page &$page)
     {
-        $page->validate();
-
         if ($page->id) {
             $statement = $this->pdo->prepare('UPDATE `pages` SET `name` = :name, `slug` = :slug, `content` = :content, `draft` = :draft WHERE `id` = :id');
             $statement->bindValue(':id', $page->id, PDO::PARAM_INT);

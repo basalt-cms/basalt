@@ -2,8 +2,6 @@
 
 namespace Basalt\Database;
 
-use PDO;
-
 class SettingMapper extends AbstractMapper
 {
     const ENTITY = '\Basalt\Database\Setting';
@@ -19,7 +17,7 @@ class SettingMapper extends AbstractMapper
 
     public function get($name)
     {
-        $statement = $this->pdo->prepare('SELECT * FROM `settings` WHERE `name` = :name');
+        $statement = $this->pdo->prepare('SELECT * FROM `settings` WHERE `name` = :name LIMIT 1');
         $statement->bindValue(':name', $name);
 
         $statement->execute();
