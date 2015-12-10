@@ -4,24 +4,9 @@ namespace Basalt\Database;
 
 use PDO;
 
-class PageMapper
+class PageMapper extends AbstractMapper
 {
     const ENTITY = '\Basalt\Database\Page';
-
-    /**
-     * @var \PDO PDO.
-     */
-    protected $pdo;
-
-    /**
-     * Constructor.
-     *
-     * @param \PDO $pdo PDO.
-     */
-    public function __construct(PDO $pdo)
-    {
-        $this->pdo = $pdo;
-    }
 
     /**
      * Return page by slug.
