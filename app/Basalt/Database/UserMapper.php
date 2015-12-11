@@ -2,6 +2,8 @@
 
 namespace Basalt\Database;
 
+use PDO;
+
 class UserMapper extends AbstractMapper
 {
     const ENTITY = '\Basalt\Database\User';

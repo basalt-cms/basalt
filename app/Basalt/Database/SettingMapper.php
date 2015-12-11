@@ -2,6 +2,8 @@
 
 namespace Basalt\Database;
 
+use PDO;
+
 class SettingMapper extends AbstractMapper
 {
     const ENTITY = '\Basalt\Database\Setting';
