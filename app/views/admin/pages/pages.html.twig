@@ -60,7 +60,7 @@
             'update': function() {
                 var data = jQuery(this).sortable('serialize');
 
-                jQuery.post('{{ url('changeOrderPage') }}', data);
+                jQuery.post('{{ url('changePagesOrder') }}', data);
             }
         });
         jQuery('#table > tbody').disableSelection();

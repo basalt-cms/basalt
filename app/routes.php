@@ -1,79 +1,29 @@
 <?php
 
-use Basalt\Http\Request;
-use Symfony\Component\Routing\Route;
+use Basalt\Facades\RoutesFacade;
 use Symfony\Component\Routing\RouteCollection;
 
-$routes = new RouteCollection();
+$facade = new RoutesFacade(new RouteCollection);
 
-$routes->add('index', new Route(
-    '/', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PagesController@page'
-    ], [], [], '', [], Request::METHOD_GET));
+$facade->addGet('index', '/', 'Basalt\\Http\\Controllers\\PagesController@page');
 
-$routes->add('dashboard', new Route(
-    '/admin', [
-        '_controller' => 'Basalt\\Http\\Controllers\\AdminPanelController@dashboard'
-    ], [], [], '', [], Request::METHOD_GET));
+$facade->addGet('dashboard', '/admin', 'Basalt\\Http\\Controllers\\AdminPanelController@dashboard');
 
-$routes->add('pages', new Route(
-    '/admin/pages', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PagesController@pages'
-    ], [], [], '', [], Request::METHOD_GET));
+$facade->addGet('pages', '/admin/pages', 'Basalt\\Http\\Controllers\\PagesController@pages');
+$facade->addGet('newPage', '/admin/pages/new', 'Basalt\\Http\\Controllers\\PagesController@newPage');
+$facade->addPost('addPage', '/admin/pages', 'Basalt\\Http\\Controllers\\PagesController@add');
+$facade->addGet('editPage', '/admin/pages/{id}', 'Basalt\\Http\\Controllers\\PagesController@edit');
+$facade->addPut('updatePage', '/admin/pages/{id}', 'Basalt\\Http\\Controllers\\PagesController@update');
+$facade->addPost('changePagesOrder', '/admin/', 'Basalt\\Http\\Controllers\\PagesController@changeOrder');
+$facade->addDelete('deletePage', '/admin/{id}', 'Basalt\\Http\\Controllers\\PagesController@delete');
 
-$routes->add('newPage', new Route(
-    '/admin/pages/new', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PagesController@newPage' // Cuz new is a keyword
-    ], [], [], '', [], Request::METHOD_GET));
+$facade->addGet('plugins', '/admin/plugins', 'Basalt\\Http\\Controllers\\PluginsController@plugins');
 
-$routes->add('addPage', new Route(
-    '/admin/pages', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PagesController@add'
-    ], [], [], '', [], Request::METHOD_POST));
+$facade->addGet('settings', '/admin/settings', 'Basalt\\Http\\Controllers\\SettingsController@settings');
+$facade->addPost('updateSettings', '/admin/settings', 'Basalt\\Http\\Controllers\\SettingsController@update');
 
-$routes->add('editPage', new Route(
-    '/admin/pages/{id}', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PagesController@edit'
-    ], [], [], '', [], Request::METHOD_GET));
+$facade->addGet('updates', '/admin/updates', 'Basalt\\Http\\Controllers\\UpdatesController@updates');
 
-$routes->add('updatePage', new Route(
-    '/admin/pages/{id}', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PagesController@update'
-    ], [], [], '', [], Request::METHOD_PUT));
+$facade->addGet('page', '/{slug}', 'Basalt\\Http\\Controllers\\PagesController@page');
 
-$routes->add('changeOrderPage', new Route(
-    '/admin/pages/order', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PagesController@changeOrder'
-    ], [], [], '', [], Request::METHOD_POST));
-
-$routes->add('deletePage', new Route(
-    '/admin/{id}', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PagesController@delete'
-    ], [], [], '', [], Request::METHOD_DELETE));
-
-$routes->add('plugins', new Route(
-    '/admin/plugins', [
-        '_controller' => 'Basalt\\Http\\Controllers\\PluginsController@plugins'
-    ], [], [], '', [], Request::METHOD_GET));
-
-$routes->add('settings', new Route(
-    '/admin/settings', [
-        '_controller' => 'Basalt\\Http\\Controllers\\SettingsController@settings'
-    ], [], [], '', [], Request::METHOD_GET));
-
-$routes->add('updateSettings', new Route(
-    '/admin/settings', [
-        '_controller' => 'Basalt\\Http\\Controllers\\SettingsController@update'
-    ], [], [], '', [], Request::METHOD_POST));
-
-$routes->add('updates', new Route(
-    '/admin/updates', [
-        '_controller' => 'Basalt\\Http\\Controllers\\UpdatesController@updates'
-    ], [], [], '', [], Request::METHOD_GET));
-
-$routes->add('page', new Route(
-    '/{slug}', [
-    '_controller' => 'Basalt\\Http\\Controllers\\PagesController@page'
-], [], [], '', [], Request::METHOD_GET));
-
-return $routes;
+return $facade->getRouteCollection();
