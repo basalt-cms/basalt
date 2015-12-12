@@ -56,6 +56,16 @@ class Validator
     }
 
     /**
+     * Returns if there are errors.
+     *
+     * @return bool
+     */
+    public function fails()
+    {
+        return !empty($this->errors);
+    }
+
+    /**
      * Run rules and validator.
      *
      * @return void
@@ -111,8 +121,8 @@ class Validator
      * Create instance of Rules.
      *
      * @param string $className Class name.
-     * @param $value Value.
-     * @return \Basalt\Validator\Rules\RuleInterface
+     * @param mixed $value Value.
+     * @return \Basalt\Validator\RuleInterface
      */
     protected function createInstance($className, $value)
     {
@@ -166,7 +176,7 @@ class Validator
         $defined = array_count_values(array_values([self::LABEL, self::VALUE]));
 
         if ($values !== $defined) {
-            throw new \Exception(sprintf('Input data array must have two indexed: `%s` and `%s`', self::LABEL, self::VALUE));
+            throw new \Exception(sprintf('Input data array must have two indexes: `%s` and `%s`', self::LABEL, self::VALUE));
         }
 
         if (false === is_array($row[self::RULES])) {

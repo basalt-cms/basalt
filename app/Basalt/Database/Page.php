@@ -9,7 +9,7 @@ class Page
 {
     public $id, $name, $slug, $content, $draft = false;
 
-    public function validate()
+    public function validator()
     {
         $validator = new Validator;
         $validator->importRow('name', $this->name, ['IsNotEmpty'])
@@ -17,9 +17,6 @@ class Page
                   ->importRow('content', $this->content, ['IsNotEmpty'])
                   ->run();
 
-        $errors = $validator->getErrors();
-        if (false === empty($errors)) {
-            throw new ValidationException($errors);
-        }
+        return $validator;
     }
 }

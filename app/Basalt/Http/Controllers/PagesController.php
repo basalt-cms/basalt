@@ -62,17 +62,19 @@ class PagesController extends Controller
         $page->content = $input['content'];
         $page->draft = isset($input['draft']);
 
-        try {
+        $validator = $page->validator();
+
+        if($validator->fails()) {
+            $this->setFlash('errors', $validator->getErrors());
+            $this->setFlash('input', serialize($this->app->container->request->input));
+
+            return $this->redirect('newPage');
+        } else {
             $this->dataMapper->save($page);
 
             $this->setFlash('message', 'Page has been added successful.');
 
             return $this->redirect('pages');
-        } catch (ValidationException $e) {
-            $this->setFlash('errors', $e->getErrors());
-            $this->setFlash('input', serialize($this->app->container->request->input));
-
-            return $this->redirect('newPage');
         }
     }
 
@@ -95,17 +97,19 @@ class PagesController extends Controller
         $page->content = $input['content'];
         $page->draft = isset($input['draft']);
 
-        try {
+        $validator = $page->validator();
+
+        if ($validator->fails()) {
+            $this->setFlash('errors', $validator->getErrors());
+            $this->setFlash('input', serialize($this->app->container->request->input));
+
+            return $this->redirect(['editPage', ['id' => $id]]);
+        } else {
             $this->dataMapper->save($page);
 
             $this->setFlash('message', 'Page has been updated successful.');
 
             return $this->redirect('pages');
-        } catch (ValidationException $e) {
-            $this->setFlash('errors', $e->getErrors());
-            $this->setFlash('input', serialize($this->app->container->request->input));
-
-            return $this->redirect(['editPage', ['id' => $id]]);
         }
     }
 
@@ -115,7 +119,7 @@ class PagesController extends Controller
 
         $this->dataMapper->changeOrder($order);
 
-        return new Response;
+        return Response::blank();
     }
 
     public function delete($id)

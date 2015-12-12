@@ -32,6 +32,11 @@ class Response
         $this->headers = $headers;
     }
 
+    public static function blank()
+    {
+        return new self;
+    }
+
     /**
      * Return response body.
      *

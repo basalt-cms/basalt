@@ -115,7 +115,7 @@ class RoutesFacade
     }
 
     /**
-     * Return route collection.
+     * Returns route collection.
      *
      * @return RouteCollection Route collecton
      */
