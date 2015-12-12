@@ -62,7 +62,7 @@ class Validator
      */
     public function fails()
     {
-        return !empty($this->errors);
+        return false === empty($this->errors);
     }
 
     /**

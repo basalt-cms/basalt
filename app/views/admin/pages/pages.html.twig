@@ -55,15 +55,14 @@
             handle: '.drag',
             placeholder: 'placeholder',
             axis: 'y',
-            containment: 'parent',
+            containment: 'body',
 
             'update': function() {
                 var data = jQuery(this).sortable('serialize');
 
                 jQuery.post('{{ url('changePagesOrder') }}', data);
             }
-        });
-        jQuery('#table > tbody').disableSelection();
+        }).disableSelection();
         jQuery('#table td').each(function() {
             $(this).css('width', $(this).width());
         });
