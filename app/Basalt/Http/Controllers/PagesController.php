@@ -5,7 +5,6 @@ namespace Basalt\Http\Controllers;
 use Basalt\Database\Page;
 use Basalt\Database\PageMapper;
 use Basalt\Database\SettingMapper;
-use Basalt\Validator\ValidationException;
 use Basalt\Http\Response;
 
 class PagesController extends Controller

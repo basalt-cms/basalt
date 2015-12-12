@@ -2,7 +2,6 @@
 
 namespace Basalt\Database;
 
-use Basalt\Validator\ValidationException;
 use Basalt\Validator\Validator;
 
 class Page
