@@ -2,9 +2,12 @@
 
 namespace Basalt;
 
+use Basalt\Auth\AuthenticationException;
+use Basalt\Http\RedirectResponse;
 use Basalt\Http\ResponseExpectedException;
 use Basalt\Http\Response;
 use Basalt\Providers\ServiceProvider;
+use ReflectionClass;
 
 class App
 {
@@ -12,6 +15,7 @@ class App
      * @var array Config array.
      */
     public $config;
+
     /**
      * @var \Basalt\Container Inversion of control container.
      */
@@ -36,8 +40,8 @@ class App
      */
     public function run()
     {
-        $this->runProviders();
         $this->prepareResponse();
+        $this->runProviders();
 
         $this->container->response->send();
     }
@@ -60,6 +64,23 @@ class App
     }
 
     /**
+     * Adds provider to array.
+     *
+     * @param string $name Provider's class name.
+     * @return bool
+     */
+    public function addProvider($name)
+    {
+        $reflection = new ReflectionClass($name);
+
+        if (false === class_exists($name) || false === $reflection->isSubclassOf('Basalt\Providers\ServiceProvider')) {
+            return false;
+        }
+
+        $this->config['providers'][] = $name;
+    }
+
+    /**
      * Run providers.
      *
      * @return void
@@ -71,7 +92,7 @@ class App
         foreach ($providers as $provider) {
             $provider = new $provider($this->container);
 
-            if (!($provider instanceof ServiceProvider)) {
+            if (false === $provider instanceof ServiceProvider) {
                 continue;
             }
 
@@ -96,7 +117,14 @@ class App
             $attributes = array_intersect_key($route, array_flip($attributesKeys));
 
             $controller = new $controller($this);
-            $response = call_user_func_array([$controller, $action], $attributes);
+
+            try {
+                $response = call_user_func_array([$controller, $action], $attributes);
+            } catch (AuthenticationException $e) {
+                $url = $container->urlHelper->toRoute('login');
+
+                return new RedirectResponse($url);
+            }
 
             if (!($response instanceof Response)) {
                 throw new ResponseExpectedException;

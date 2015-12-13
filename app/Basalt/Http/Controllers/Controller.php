@@ -3,6 +3,10 @@
 namespace Basalt\Http\Controllers;
 
 use Basalt\App;
+use Basalt\Auth\AuthenticationException;
+use Basalt\Auth\Authenticator;
+use Basalt\Database\User;
+use Basalt\Database\UserMapper;
 use Basalt\Http\RedirectResponse;
 use Basalt\Http\Response;
 use Basalt\View;
@@ -30,6 +34,24 @@ class Controller
     }
 
     /**
+     * Allows only logged in users to proceed.
+     *
+     * @param bool $guestsOnly
+     * @throws \Basalt\Auth\AuthenticationException
+     */
+    protected function authorize($guestsOnly = false)
+    {
+        $userMapper = new UserMapper($this->app->container->pdo);
+        $authenticator = new Authenticator($userMapper);
+
+        $isLoggedIn = $authenticator->isLoggedIn();
+
+        if (($guestsOnly && $isLoggedIn) || (!$guestsOnly && !$isLoggedIn)) {
+            throw new AuthenticationException;
+        }
+    }
+
+    /**
      * Return response.
      *
      * @param string $name Name of the view to render.
@@ -46,26 +68,21 @@ class Controller
     /**
      * Return redirect response.
      *
-     * @param string|array $to URL or route name and parameters to redirect.
-     * @param boolean $external Is it external URL?
-     * @return \Basalt\Http\RedirectResponse
+     * @param string|array $to URL or route name with parameters to redirect.
+     * @return RedirectResponse
      */
-    protected function redirect($to, $external = false)
+    protected function redirect($to)
     {
-        if (!$external) {
-            if (is_array($to)) {
-                list($name, $parameters) = $to;
-            } else {
-                $name = $to;
-                $parameters = [];
-            }
-
-            $url = $this->app->container->urlHelper->toRoute($name, $parameters);
-
-            return new RedirectResponse($url);
+        if (is_array($to)) {
+            list($name, $parameters) = $to;
+        } else {
+            $name = $to;
+            $parameters = [];
         }
 
-        return new RedirectResponse($to);
+        $url = $this->app->container->urlHelper->toRoute($name, $parameters);
+
+        return new RedirectResponse($url);
     }
 
     /**

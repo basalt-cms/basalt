@@ -10,14 +10,18 @@
     <body>
         <header class="header" role="banner">
             <h1>Basalt</h1>
+            {% if isLoggedIn() %}
             <a href="{{ url('updates') }}" class="updates">
                 <i class="fa fa-bell fa-lg"></i>
                 <span class="digit">2</span>
                 <span class="message">Updates are available.</span>
             </a>
+            {% endif %}
             <ul>
                 <li><a href="{{ url('index') }}">Back to site</a></li>
-                <li><a href="#">Log out</a></li>
+                {% if isLoggedIn() %}
+                <li><a href="{{ url('logout') }}">Log out</a></li>
+                {% endif %}
             </ul>
         </header>
         <nav class="sidebar" role="navigation">

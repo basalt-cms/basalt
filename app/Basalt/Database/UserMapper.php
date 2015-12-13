@@ -8,16 +8,40 @@ class UserMapper extends AbstractMapper
 {
     const ENTITY = '\Basalt\Database\User';
 
-    public function getByEmail($email)
+    /**
+     * Returns user by id.
+     *
+     * @param $id
+     * @return \Basalt\Database\User|null
+     */
+    public function getById($id)
     {
-        $statement = $this->pdo->prepare('SELECT * FROM `users` WHERE `email` = :email LIMIT 1');
-        $statement->bindValue('email', $email);
+        $statement = $this->pdo->prepare('SELECT * FROM `users` WHERE `id` = :id');
+        $statement->bindValue('id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
 
         return $statement->fetchObject(self::ENTITY) ?: null;
     }
 
     /**
-     * Save the user.
+     * Returns user by email.
+     *
+     * @param $email
+     * @return \Basalt\Database\User|null
+     */
+    public function getByEmail($email)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM `users` WHERE `email` = :email LIMIT 1');
+        $statement->bindValue('email', $email);
+
+        $statement->execute();
+
+        return $statement->fetchObject(self::ENTITY) ?: null;
+    }
+
+    /**
+     * Saves the user.
      *
      * @param \Basalt\Database\User $user Page.
      * @return void

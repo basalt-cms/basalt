@@ -7,6 +7,10 @@ $routes = new RoutesFacade(new RouteCollection);
 
 $routes->addGet('index', '/', 'Basalt\\Http\\Controllers\\PagesController@page');
 
+$routes->addGet('login', '/admin/login', 'Basalt\\Http\\Controllers\\AuthController@login');
+$routes->addPost('authenticate', '/admin/login', 'Basalt\\Http\\Controllers\\AuthController@authenticate');
+$routes->addGet('logout', '/admin/logout', 'Basalt\\Http\\Controllers\\AuthController@logout');
+
 $routes->addGet('dashboard', '/admin', 'Basalt\\Http\\Controllers\\AdminPanelController@dashboard');
 
 $routes->addGet('pages', '/admin/pages', 'Basalt\\Http\\Controllers\\PagesController@pages');
@@ -24,6 +28,6 @@ $routes->addPost('updateSettings', '/admin/settings', 'Basalt\\Http\\Controllers
 
 $routes->addGet('updates', '/admin/updates', 'Basalt\\Http\\Controllers\\UpdatesController@updates');
 
-$routes->addGet('page', '/{slug}', 'Basalt\\Http\\Controllers\\PagesController@page');
+$routes->addGet('page', '/{slug}', 'Basalt\\Http\\Controllers\\PagesController@page', ['slug' => '']);
 
 return $routes->getRouteCollection();

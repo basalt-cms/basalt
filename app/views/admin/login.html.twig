@@ -1,0 +1,20 @@
+{% extends 'admin.html.twig' %}
+
+{% set title = ['Log in'] %}
+
+{% block content %}
+    {{ form('authenticate', {'class': 'login'}) }}
+        <h2>Log in</h2>
+        <label for="email" class="sr-only">Email address</label>
+        {{ email('email', email, {'id': 'email', 'class': 'form-control', 'placeholder': 'Email address', 0: 'required', 1: 'autofocus'}) }}
+        <label for="password" class="sr-only">Password</label>
+        {{ password('password', {'id': 'password', 'class': 'form-control', 'placeholder': 'Password', 0: 'required'}) }}
+        {{ submit('Log in', {'class': 'btn btn-primary btn-lg btn-block'}) }}
+    {{ closeForm() }}
+    {% if errors is not empty %}
+        <div class="alert alert-danger alert-dissmissible notification" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ errors }}
+        </div>
+    {% endif %}
+{% endblock %}

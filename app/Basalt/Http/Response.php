@@ -32,6 +32,11 @@ class Response
         $this->headers = $headers;
     }
 
+    /**
+     * Fabric method for empty response.
+     *
+     * @return Response
+     */
     public static function blank()
     {
         return new self;

@@ -6,6 +6,8 @@ class PluginsController extends Controller
 {
     public function plugins()
     {
+        $this->authorize();
+
         return $this->render('admin.plugins.plugins');
     }
 }

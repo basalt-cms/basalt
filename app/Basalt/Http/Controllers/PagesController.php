@@ -18,11 +18,11 @@ class PagesController extends Controller
         $this->dataMapper = new PageMapper($this->app->container->pdo);
     }
     
-    public function page($slug = null)
+    public function page($slug = '')
     {
         $menu = $this->dataMapper->all();
 
-        if (is_null($slug)) {
+        if (empty($slug)) {
             $page = $this->dataMapper->getIndex();
         } else {
             $page = $this->dataMapper->getBySlug($slug);
@@ -37,6 +37,8 @@ class PagesController extends Controller
 
     public function pages()
     {
+        $this->authorize();
+
         $pages = $this->dataMapper->all(true);
 
         $message = $this->getFlash('message');
@@ -46,6 +48,8 @@ class PagesController extends Controller
 
     public function newPage()
     {
+        $this->authorize();
+
         $errors = $this->getFlash('errors');
 
         return $this->render('admin.pages.new', compact('errors'));
@@ -53,6 +57,8 @@ class PagesController extends Controller
 
     public function add()
     {
+        $this->authorize();
+
         $input = $this->app->container->request->input;
 
         $page = new Page;
@@ -79,6 +85,8 @@ class PagesController extends Controller
 
     public function edit($id)
     {
+        $this->authorize();
+
         $page = $this->dataMapper->getById($id);
 
         $errors = $this->getFlash('errors');
@@ -88,6 +96,8 @@ class PagesController extends Controller
 
     public function update($id)
     {
+        $this->authorize();
+
         $input = $this->app->container->request->input;
 
         $page = $this->dataMapper->getById($id);
@@ -114,6 +124,8 @@ class PagesController extends Controller
 
     public function changeOrder()
     {
+        $this->authorize();
+
         $order = $this->app->container->request->input['item'];
 
         $this->dataMapper->changeOrder($order);
@@ -123,6 +135,8 @@ class PagesController extends Controller
 
     public function delete($id)
     {
+        $this->authorize();
+
         if (1 !== $id) {
             $this->dataMapper->delete($id);
 

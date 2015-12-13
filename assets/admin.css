@@ -271,3 +271,20 @@ html {
 .page-header a {
     margin-top: 4px;
 }
+
+.login {
+    margin: 0 auto;
+    max-width: 300px;
+}
+
+.login [type="email"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.login [type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

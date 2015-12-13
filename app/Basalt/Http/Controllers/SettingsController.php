@@ -17,6 +17,8 @@ class SettingsController extends Controller
 
     public function settings()
     {
+        $this->authorize();
+
         $settings = $this->dataMapper->all();
 
         $message = $this->getFlash('message');
@@ -26,6 +28,8 @@ class SettingsController extends Controller
 
     public function update()
     {
+        $this->authorize();
+
         $input = $this->app->container->request->input;
 
         foreach($input['settings'] as $name => $value) {

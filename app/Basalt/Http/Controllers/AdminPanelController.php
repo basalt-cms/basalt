@@ -6,6 +6,8 @@ class AdminPanelController extends Controller
 {
     public function dashboard()
     {
+        $this->authorize();
+
         return $this->render('admin.dashboard');
     }
 }
