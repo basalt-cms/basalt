@@ -7,7 +7,6 @@ use Basalt\Http\RedirectResponse;
 use Basalt\Http\ResponseExpectedException;
 use Basalt\Http\Response;
 use Basalt\Providers\ServiceProvider;
-use ReflectionClass;
 
 class App
 {
