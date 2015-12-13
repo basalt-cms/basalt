@@ -71,9 +71,7 @@ class App
      */
     public function addProvider($name)
     {
-        $reflection = new ReflectionClass($name);
-
-        if (false === class_exists($name) || false === $reflection->isSubclassOf('Basalt\Providers\ServiceProvider')) {
+        if (false === class_exists($name) || false === is_subclass_of($name, 'Basalt\Providers\ServiceProvider')) {
             return false;
         }
 
