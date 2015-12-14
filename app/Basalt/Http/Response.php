@@ -2,6 +2,8 @@
 
 namespace Basalt\Http;
 
+use InvalidArgumentException;
+
 class Response
 {
     /**
@@ -77,13 +79,13 @@ class Response
      * Set status code.
      *
      * @param $status
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return void
      */
     public function setStatus($status)
     {
         if (!is_int($status)) {
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException;
         }
 
         $this->status = $status;
