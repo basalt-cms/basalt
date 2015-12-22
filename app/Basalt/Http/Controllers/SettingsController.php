@@ -34,6 +34,11 @@ class SettingsController extends Controller
 
         foreach($input['settings'] as $name => $value) {
             $setting = $this->dataMapper->get($name);
+
+            if ($setting->value == $value) {
+                continue;
+            }
+
             $setting->value = $value;
 
             $this->dataMapper->save($setting);
