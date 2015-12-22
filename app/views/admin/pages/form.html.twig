@@ -1,31 +1,35 @@
 {% extends 'admin.html.twig' %}
 
-{% set title = ['New page', 'pages'] %}
+{% set title = ['Edit ' ~ page.name, 'pages'] %}
 
 {% block content %}
     <div class="page-header">
-        <h2>New page</h2>
+        <h2>Edit page</h2>
         <div class="btn-group">
             <a href="#" class="btn btn-default">Preview</a>
             <a href="{{ url('pages') }}" class="btn btn-default">Back without saving</a>
         </div>
     </div>
-    {{ form('addPage', {'class': 'form'}) }}
+    {% if page.id is null %}
+        {{ form('addPage', {'class': 'form', 'id': 'form'}) }}
+    {% else %}
+        {{ form(['updatePage', {'id': page.id}], {'class': 'form', 'id': 'form'}) }}
+    {% endif %}
         <div class="row">
             <div class="col-sm-6 form-group">
                 <label for="name">Page name</label>
-                {{ text('name', '', {'id': 'name', 'class': 'form-control', 0: 'required'}) }}
+                {{ text('name', page.name, {'id': 'name', 'class': 'form-control', 0: 'required'}) }}
             </div>
             <div class="col-sm-6 form-group">
                 <label for="slug">Page slug</label>
-                {{ text('slug', '', {'id': 'slug', 'class': 'form-control', 0: 'required'}) }}
+                {{ text('slug', page.slug, {'id': 'slug', 'class': 'form-control', 'pattern': '[a-z0-9]+(?:-[a-z0-9]+)*', 0: 'required'}) }}
             </div>
         </div>
         <div class="form-group">
             <label for="content">Content</label>
-            {{ textarea('content', '', {'id': 'content', 'rows': 15, 'class': 'form-control'}) }}
+            {{ textarea('content', page.content, {'id': 'content', 'rows': 15, 'class': 'form-control'}) }}
         </div>
-        <p class="pull-right">{{ submit('Add page', {'class': 'btn btn-primary'}) }} or {{ input('submit', 'draft', 'save as draft', {'class': 'btn btn-default'}) }}</p>
+        <p class="pull-right">{{ submit('Save page', {'class': 'btn btn-primary'}) }} or {{ input('submit', 'draft', 'save as draft', {'class': 'btn btn-default'}) }}</p>
     {{ closeForm() }}
     {% if errors is not empty %}
         <div class="alert alert-danger alert-dissmissible notification" role="alert">

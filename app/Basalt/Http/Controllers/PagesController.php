@@ -50,9 +50,10 @@ class PagesController extends Controller
     {
         $this->authorize();
 
+        $page = new Page;
         $errors = $this->getFlash('errors');
 
-        return $this->render('admin.pages.new', compact('errors'));
+        return $this->render('admin.pages.form', compact('page', 'errors'));
     }
 
     public function add()
@@ -91,7 +92,7 @@ class PagesController extends Controller
 
         $errors = $this->getFlash('errors');
 
-        return $this->render('admin.pages.edit', compact('page', 'errors'));
+        return $this->render('admin.pages.form', compact('page', 'errors'));
     }
 
     public function update($id)

@@ -2,7 +2,7 @@
 
 class ResponseTest extends PHPUnit_Framework_TestCase
 {
-    public function testBland()
+    public function testBlank()
     {
         $response = \Basalt\Http\Response::blank();
 
