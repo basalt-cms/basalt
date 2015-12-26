@@ -15,7 +15,7 @@ class PagesController extends Controller
     {
         parent::__construct($app);
 
-        $this->dataMapper = new PageMapper($this->app->container->pdo);
+        $this->dataMapper = new PageMapper($this->app['pdo']);
     }
     
     public function page($slug = '')
@@ -28,7 +28,7 @@ class PagesController extends Controller
             $page = $this->dataMapper->getBySlug($slug);
         }
 
-        $settingsMapper = new SettingMapper($this->app->container->pdo);
+        $settingsMapper = new SettingMapper($this->app['pdo']);
         $website_name = $settingsMapper->get('website_name');
         $website_author = $settingsMapper->get('website_author');
 
@@ -60,7 +60,7 @@ class PagesController extends Controller
     {
         $this->authorize();
 
-        $input = $this->app->container->request->input;
+        $input = $this->app['request']->input;
 
         $page = new Page;
         $page->name = $input['name'];
@@ -72,7 +72,7 @@ class PagesController extends Controller
 
         if($validator->fails()) {
             $this->setFlash('errors', $validator->getErrors());
-            $this->setFlash('input', serialize($this->app->container->request->input));
+            $this->setFlash('input', serialize($this->app['request']->input));
 
             return $this->redirect('newPage');
         } else {
@@ -99,7 +99,7 @@ class PagesController extends Controller
     {
         $this->authorize();
 
-        $input = $this->app->container->request->input;
+        $input = $this->app['request']->input;
 
         $page = $this->dataMapper->getById($id);
         $page->name = $input['name'];
@@ -111,7 +111,7 @@ class PagesController extends Controller
 
         if ($validator->fails()) {
             $this->setFlash('errors', $validator->getErrors());
-            $this->setFlash('input', serialize($this->app->container->request->input));
+            $this->setFlash('input', serialize($this->app['request']->input));
 
             return $this->redirect(['editPage', ['id' => $id]]);
         } else {
@@ -127,7 +127,7 @@ class PagesController extends Controller
     {
         $this->authorize();
 
-        $order = $this->app->container->request->input['item'];
+        $order = $this->app['request']->input['item'];
 
         $this->dataMapper->changeOrder($order);
 

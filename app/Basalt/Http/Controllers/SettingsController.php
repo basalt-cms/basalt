@@ -12,7 +12,7 @@ class SettingsController extends Controller
     {
         parent::__construct($app);
 
-        $this->dataMapper = new SettingMapper($this->app->container->pdo);
+        $this->dataMapper = new SettingMapper($this->app['pdo']);
     }
 
     public function settings()
@@ -30,7 +30,7 @@ class SettingsController extends Controller
     {
         $this->authorize();
 
-        $input = $this->app->container->request->input;
+        $input = $this->app['request']->input;
 
         foreach($input['settings'] as $name => $value) {
             $setting = $this->dataMapper->get($name);

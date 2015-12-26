@@ -14,7 +14,7 @@ class AuthController extends Controller
     {
         parent::__construct($app);
 
-        $this->userMapper = new UserMapper($this->app->container->pdo);
+        $this->userMapper = new UserMapper($this->app['pdo']);
     }
 
     public function login()
@@ -30,7 +30,7 @@ class AuthController extends Controller
     {
         $this->authorize(true);
 
-        $input = $this->app->container->request->input;
+        $input = $this->app['request']->input;
         $authenticator = new Authenticator($this->userMapper);
 
         if ($authenticator->authenticate($input['email'], $input['password'])) {

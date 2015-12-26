@@ -2,13 +2,14 @@
 
 namespace Basalt;
 
+use ArrayAccess;
 use Basalt\Auth\AuthenticationException;
 use Basalt\Http\RedirectResponse;
 use Basalt\Http\ResponseExpectedException;
 use Basalt\Http\Response;
 use Basalt\Providers\ServiceProvider;
 
-class App
+class App implements ArrayAccess
 {
     /**
      * @var array Config array.
@@ -18,7 +19,7 @@ class App
     /**
      * @var \Basalt\Container Inversion of control container.
      */
-    public $container;
+    protected $container;
 
     /**
      * Constructor.
@@ -129,5 +130,24 @@ class App
 
             return $response;
         };
+    }
+    public function offsetExists($offset)
+    {
+        return isset($this->container->$offset);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->container->$offset;
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->container->$offset = $value;
+    }
+
+    public function offsetUnset($offset)
+    {
+        unset($this->container->$offset);
     }
 }

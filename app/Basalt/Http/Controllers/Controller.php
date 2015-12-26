@@ -30,7 +30,7 @@ class Controller
     public function __construct(App $app)
     {
         $this->app = $app;
-        $this->view = new View($app->container->twig);
+        $this->view = new View($app['twig']);
     }
 
     /**
@@ -41,7 +41,7 @@ class Controller
      */
     protected function authorize($guestsOnly = false)
     {
-        $userMapper = new UserMapper($this->app->container->pdo);
+        $userMapper = new UserMapper($this->app['pdo']);
         $authenticator = new Authenticator($userMapper);
 
         $isLoggedIn = $authenticator->isLoggedIn();
@@ -80,7 +80,7 @@ class Controller
             $parameters = [];
         }
 
-        $url = $this->app->container->urlHelper->toRoute($name, $parameters);
+        $url = $this->app['urlHelper']->toRoute($name, $parameters);
 
         return new RedirectResponse($url);
     }
@@ -94,7 +94,7 @@ class Controller
      */
     protected function setFlash($name, $value)
     {
-        $this->app->container->flash->set($name, $value);
+        $this->app['flash']->set($name, $value);
     }
 
     /**
@@ -105,7 +105,7 @@ class Controller
      */
     protected function getFlash($name)
     {
-        return $this->app->container->flash->get($name);
+        return $this->app['flash']->get($name);
     }
 
 }
