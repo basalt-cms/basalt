@@ -146,4 +146,9 @@ class PagesController extends Controller
 
         return $this->redirect('pages');
     }
+
+    public function notFound()
+    {
+        return new Response('404 Not Found');
+    }
 }

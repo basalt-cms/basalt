@@ -3,10 +3,7 @@
 namespace Basalt;
 
 use ArrayAccess;
-use Basalt\Auth\AuthenticationException;
-use Basalt\Http\RedirectResponse;
-use Basalt\Http\ResponseExpectedException;
-use Basalt\Http\Response;
+use Basalt\Http\ControllerHandler;
 use Basalt\Providers\ServiceProvider;
 
 class App implements ArrayAccess
@@ -76,6 +73,8 @@ class App implements ArrayAccess
         }
 
         $this->config['providers'][] = $name;
+
+        return true;
     }
 
     /**
@@ -106,29 +105,12 @@ class App implements ArrayAccess
     protected function prepareResponse()
     {
         $this->container->response = function(Container $container) {
+            /** @var array $route */
             $route = $container->matcher->match(isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
-            list($controller, $action) = explode('@', $route['_controller']);
 
-            $attributesKeys = array_filter(array_keys($route), function($key) {
-                return strpos($key, '_') !== 0;
-            });
-            $attributes = array_intersect_key($route, array_flip($attributesKeys));
+            $controllerHandler = new ControllerHandler($container->app, $route);
 
-            $controller = new $controller($this);
-
-            try {
-                $response = call_user_func_array([$controller, $action], $attributes);
-            } catch (AuthenticationException $e) {
-                $url = $container->urlHelper->toRoute('login');
-
-                return new RedirectResponse($url);
-            }
-
-            if (!($response instanceof Response)) {
-                throw new ResponseExpectedException;
-            }
-
-            return $response;
+            return $controllerHandler->handleAndReturnResponse();
         };
     }
     public function offsetExists($offset)

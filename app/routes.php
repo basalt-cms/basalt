@@ -28,6 +28,8 @@ $routes->addPost('updateSettings', '/admin/settings', 'Basalt\\Http\\Controllers
 
 $routes->addGet('updates', '/admin/updates', 'Basalt\\Http\\Controllers\\UpdatesController@updates');
 
+$routes->addGet('404', '/404', 'Basalt\\Http\\Controllers\\PagesController@notFound');
+
 $routes->addGet('page', '/{slug}', 'Basalt\\Http\\Controllers\\PagesController@page', ['slug' => '']);
 
 return $routes->getRouteCollection();

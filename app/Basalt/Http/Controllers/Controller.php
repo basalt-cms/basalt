@@ -5,13 +5,12 @@ namespace Basalt\Http\Controllers;
 use Basalt\App;
 use Basalt\Auth\AuthenticationException;
 use Basalt\Auth\Authenticator;
-use Basalt\Database\User;
 use Basalt\Database\UserMapper;
 use Basalt\Http\RedirectResponse;
 use Basalt\Http\Response;
 use Basalt\View;
 
-class Controller
+abstract class Controller
 {
     /**
      * @var \Basalt\App Application.
@@ -46,8 +45,12 @@ class Controller
 
         $isLoggedIn = $authenticator->isLoggedIn();
 
-        if (($guestsOnly && $isLoggedIn) || (!$guestsOnly && !$isLoggedIn)) {
-            throw new AuthenticationException;
+        if (($guestsOnly && $isLoggedIn)) {
+            throw new AuthenticationException('Only guests can access.', AuthenticationException::LOGGED_IN);
+        }
+
+        if ((!$guestsOnly && !$isLoggedIn)) {
+            throw new AuthenticationException('Only authorized users can access.', AuthenticationException::NOT_LOGGED_IN);
         }
     }
 
