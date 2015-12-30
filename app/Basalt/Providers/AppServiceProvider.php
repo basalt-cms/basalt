@@ -8,7 +8,6 @@ use Basalt\Http\Flash;
 use Basalt\Http\Request;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\RequestContext;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,14 +17,17 @@ class AppServiceProvider extends ServiceProvider
     public function provide()
     {
         $this->container->request = function() {
-            return new Request;
+            if (isset($_POST[Request::METHOD_OVERRIDE])) {
+                $method = strtoupper($_POST[Request::METHOD_OVERRIDE]);
+            } else {
+                $method = $_SERVER['REQUEST_METHOD'];
+            }
+
+            return new Request($_SERVER['REQUEST_URI'], $method, 'php://memory', apache_request_headers());
         };
 
-        $this->container->context = function() {
-            $context = new RequestContext($_SERVER['REQUEST_URI']);
-            $this->container->request->prepareContext($context);
-
-            return $context;
+        $this->container->context = function(Container $container) {
+            return $container->request->makeContext();
         };
 
         $this->container->matcher = function(Container $container) {

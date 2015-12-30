@@ -2,14 +2,16 @@
 
 namespace Basalt\Http;
 
+use InvalidArgumentException;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
 use Symfony\Component\Routing\RequestContext;
 
-class Request
+class Request implements RequestInterface
 {
-    const METHOD_GET = 'GET';
-    const METHOD_POST = 'POST';
-    const METHOD_PUT = 'PUT';
-    const METHOD_DELETE = 'DELETE';
+    use MessageTrait;
+
     const METHOD_OVERRIDE = '_METHOD';
 
     /**
@@ -20,36 +22,129 @@ class Request
     /**
      * @var string HTTP method.
      */
-    protected $method;
+    private $method;
+
+    /**
+     * @var string|null
+     */
+    private $requestTarget;
+
+    /**
+     * @var UriInterface|null
+     */
+    private $uri;
+
+    private $validMethods = [
+        'CONNECT',
+        'DELETE',
+        'GET',
+        'HEAD',
+        'OPTIONS',
+        'PATCH',
+        'POST',
+        'PUT',
+        'TRACE'
+    ];
 
     /**
      * Constructor.
+     *
+     * @param string|null $uri
+     * @param string|null|UriInterface $method
+     * @param string|resource|StreamInterface $body
+     * @param array array $headers
      */
-    public function __construct()
+    public function __construct($uri = null, $method = null, $body = 'php://memory', array $headers = [])
     {
+        if (!is_null($uri) && !is_string($uri) && !$uri instanceof UriInterface) {
+            throw new InvalidArgumentException('URI must be a null, string or Psr\Http\Message\UriMessage instance.');
+        }
+
+        $this->validateMethod($method);
+
+        if (!is_string($body) && !is_resource($body) && !$body instanceof StreamInterface) {
+            throw new InvalidArgumentException('Body must be a string, resource or Psr\Http\Message\StreamInterface instance.');
+        }
+
+        if (is_string($uri)) {
+            $uri = new Uri($uri);
+        }
+
+        $this->method = $method;
+        $this->uri = $uri;
+        $this->stream = ($body instanceof StreamInterface) ? $body : new Stream($body, 'r');
+        list($this->headersMap, $headers) = $this->filterHeaders($headers);
+        $this->headers = $headers;
+
         $this->extractInput();
-        $this->setMethod();
+        $this->setUpRequestTarget();
     }
 
     /**
-     * Return HTTP method.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getMethod()
+    public function getHeaders()
     {
-        return $this->method;
+        $headers = $this->getHeaders();
+
+        if (!$this->hasHeader('host') && $this->uri && $this->uri->getHost()) {
+            $headers['Host'] = [$this->getHostFromUri()];
+        }
+
+        return $headers;
     }
 
     /**
-     * Prepare RequestContext.
-     *
-     * @param \Symfony\Component\Routing\RequestContext $context Request context.
-     * @return void
+     * {@inheritdoc}
      */
-    public function prepareContext(RequestContext &$context)
+    public function getHeader($name)
     {
-        $context->setMethod($this->method);
+        if (!$this->hasHeader($name)) {
+            if (strtolower($name) == 'host' && $this->uri && $this->uri->getHost()) {
+                return [$this->getHostFromUri()];
+            }
+
+            return [];
+        }
+
+        $header = $this->headersMap[strtolower($name)];
+
+        $value = $this->headers[$header];
+        $value = is_array($value) ? $value : [$value];
+
+        return $value;
+    }
+
+    /**
+     * Extract input variables.
+     */
+    private function extractInput()
+    {
+        $this->input = new Input(array_merge($_GET, $_POST));
+    }
+
+    private function setUpRequestTarget()
+    {
+        if (!$this->uri) {
+            return '/';
+        }
+
+        $target = $this->uri->getPath();
+
+        if ($query = $this->uri->getQuery()) {
+            $target .= '?' . $query;
+        }
+
+        if (empty($target)) {
+            $target = '/';
+        }
+
+        return $target;
+    }
+
+    public function makeContext()
+    {
+        return new RequestContext($this->uri, $this->method);
     }
 
     /**
@@ -63,31 +158,95 @@ class Request
     }
 
     /**
-     * Extract input variables.
-     *
-     * @return void
+     * {@inheritdoc}
      */
-    protected function extractInput()
+    public function getRequestTarget()
     {
-        $this->input = new Input(array_merge($_GET, $_POST));
+        return $this->requestTarget;
     }
 
     /**
-     * Set HTTP method.
-     *
-     * @return void
+     * {@inheritdoc}
      */
-    protected function setMethod()
+    public function withRequestTarget($requestTarget)
     {
-        if (isset($_POST[self::METHOD_OVERRIDE])) {
-            $method = strtoupper($_POST[self::METHOD_OVERRIDE]);
-
-            if ($method === self::METHOD_GET || $method === self::METHOD_POST || $method === self::METHOD_PUT || $method === self::METHOD_DELETE) {
-                $this->method = $method;
-                return;
-            }
+        if (preg_match('#\s#', $requestTarget)) {
+            throw new \InvalidArgumentException('Request cannot contain whitespace.');
         }
 
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $request = clone $this;
+
+        $request->requestTarget = $requestTarget;
+
+        return $request;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function withMethod($method)
+    {
+        $this->validateMethod($method);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function withUri(UriInterface $uri, $preserveHost = false)
+    {
+        $request = clone $this;
+
+        $request->uri = $uri;
+
+        if ($preserveHost) {
+            return $request;
+        }
+
+        if (!$uri->getHost()) {
+            return $request;
+        }
+
+        $host = $uri->getHost();
+        if ($port = $uri->getPort()) {
+            $host .= ':' . $port;
+        }
+
+        $request->headersMap['host'] = 'Host';
+        $request->headers['Host'] = [$host];
+
+        return $request;
+    }
+
+    private function getHostFromUri()
+    {
+        $host = $this->uri->getHost();
+        $host .= ($port = $this->uri->getPort()) ? ':' . $port : '';
+
+        return $host;
+    }
+
+    private function validateMethod($method)
+    {
+        $method = strtoupper($method);
+
+        if (!in_array($method, $this->validMethods)) {
+            throw new \InvalidArgumentException(sprintf('Unsupported HTTP method %s', $method));
+        }
     }
 }

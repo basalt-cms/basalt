@@ -15,6 +15,6 @@ class RedirectResponse extends Response
     {
         $headers['Location'] = $to;
 
-        parent::__construct('', $status, $headers);
+        parent::__construct('php://memory', $status, $headers);
     }
 }

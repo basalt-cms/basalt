@@ -78,7 +78,7 @@ class HtmlHelper extends Twig_Extension
 
         $html = sprintf('<form action="%s" method="POST"%s>', $url, $parameters);
 
-        if ($method != Request::METHOD_POST) {
+        if ($method != 'POST') {
             $html .= sprintf('<input type="hidden" name="%s" value="%s">', Request::METHOD_OVERRIDE, $method);
         }
 

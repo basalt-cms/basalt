@@ -10,7 +10,8 @@
     "require": {
         "php": ">=5.5.0",
         "twig/twig": "~1.0",
-        "symfony/routing": "~2.5"
+        "symfony/routing": "~2.5",
+        "psr/http-message": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.*"

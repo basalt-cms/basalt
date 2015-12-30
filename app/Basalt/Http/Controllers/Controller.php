@@ -8,6 +8,7 @@ use Basalt\Auth\Authenticator;
 use Basalt\Database\UserMapper;
 use Basalt\Http\RedirectResponse;
 use Basalt\Http\Response;
+use Basalt\Http\Stream;
 use Basalt\View;
 
 abstract class Controller
@@ -65,7 +66,9 @@ abstract class Controller
     {
         $body = $this->view->render($name, $data);
 
-        return new Response($body);
+        $stream = Stream::createFromContent($body);
+
+        return new Response($stream);
     }
 
     /**
